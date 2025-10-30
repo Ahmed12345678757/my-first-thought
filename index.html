@@ -3,60 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ahmed - الصفحة الشخصية</title>
+    <title>هيئة الهلال الأحمر السعودي</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <header class="hero">
-            <div class="profile-image">
-                <div class="avatar">A</div>
+        <div class="logo-section">
+            <div class="logo">
+                <svg width="120" height="120" viewBox="0 0 120 120">
+                    <circle cx="60" cy="60" r="55" fill="none" stroke="#8B0000" stroke-width="3"/>
+                    <path d="M 45 60 Q 45 45, 60 45 Q 75 45, 75 60 Q 75 75, 60 85 Q 45 75, 45 60" fill="#C41E3A"/>
+                    <text x="60" y="65" font-size="40" fill="#006C35" text-anchor="middle" font-weight="bold">⚕</text>
+                    <text x="60" y="20" font-size="8" fill="#8B0000" text-anchor="middle">هيئة الهلال الأحمر السعودي</text>
+                    <text x="60" y="110" font-size="6" fill="#8B0000" text-anchor="middle">SAUDI RED CRESCENT</text>
+                </svg>
             </div>
-            <h1 class="name">أحمد</h1>
-            <p class="title">مطور ومبرمج</p>
-            <p class="bio">
-                مرحباً بك في صفحتي الشخصية! أنا شغوف بالتكنولوجيا والبرمجة، 
-                وأسعى دائماً لتعلم كل ما هو جديد في عالم التطوير.
-            </p>
-        </header>
+            <h1>هيئة الهلال الأحمر السعودي</h1>
+            <h2>SAUDI RED CRESCENT AUTHORITY</h2>
+        </div>
 
-        <section class="skills">
-            <h2>المهارات</h2>
-            <div class="skills-grid">
-                <div class="skill-card">
-                    <div class="skill-icon">💻</div>
-                    <h3>تطوير الويب</h3>
-                    <p>HTML, CSS, JavaScript</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon">🎨</div>
-                    <h3>التصميم</h3>
-                    <p>UI/UX Design</p>
-                </div>
-                <div class="skill-card">
-                    <div class="skill-icon">⚙️</div>
-                    <h3>البرمجة</h3>
-                    <p>Python, JavaScript</p>
-                </div>
+        <div class="menu-grid">
+            <div class="menu-item blue" onclick="alert('الخريطة - قيد التطوير')">
+                <div class="icon">📍</div>
+                <div class="label">الخريطة</div>
             </div>
-        </section>
 
-        <section class="contact">
-            <h2>تواصل معي</h2>
-            <div class="social-links">
-                <a href="https://github.com/Ahmed12345678757" target="_blank" class="social-btn">
-                    <span>GitHub</span>
-                </a>
-                <a href="mailto:your.email@example.com" class="social-btn">
-                    <span>البريد الإلكتروني</span>
-                </a>
+            <div class="menu-item yellow" onclick="window.location.href='inspection.html'">
+                <div class="icon">🔍</div>
+                <div class="label">فحص السيارات</div>
             </div>
-        </section>
 
-        <footer>
-            <p>© 2025 Ahmed. جميع الحقوق محفوظة.</p>
-        </footer>
+            <div class="menu-item green" onclick="alert('إدارة السيارات - قيد التطوير')">
+                <div class="icon">🚗</div>
+                <div class="label">إدارة السيارات</div>
+            </div>
+
+            <div class="menu-item orange" onclick="alert('التقارير - قيد التطوير')">
+                <div class="icon">📋</div>
+                <div class="label">التقارير</div>
+            </div>
+
+            <div class="menu-item white" onclick="alert('استدعاء الموظفين - قيد التطوير')">
+                <div class="icon">👨‍💼</div>
+                <div class="label">استدعاء الموظفين</div>
+            </div>
+
+            <div class="menu-item light-green" onclick="alert('سيارات الخدمة - قيد التطوير')">
+                <div class="icon">🚑</div>
+                <div class="label">سيارات الخدمة</div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
