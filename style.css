@@ -1,0 +1,136 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(180deg, #1a3a2e 0%, #2d5a4a 100%);
+    min-height: 100vh;
+    direction: rtl;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.logo-section {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.logo {
+    margin-bottom: 20px;
+}
+
+h1 {
+    color: white;
+    font-size: 24px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+h2 {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 16px;
+    font-weight: normal;
+    letter-spacing: 1px;
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
+
+.menu-item {
+    border-radius: 20px;
+    padding: 40px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.menu-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.menu-item .icon {
+    font-size: 60px;
+    margin-bottom: 15px;
+}
+
+.menu-item .label {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.blue {
+    background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+}
+
+.blue .label {
+    color: white;
+}
+
+.yellow {
+    background: linear-gradient(135deg, #F5D76E 0%, #E8C547 100%);
+}
+
+.green {
+    background: linear-gradient(135deg, #7ED321 0%, #6BB91C 100%);
+}
+
+.green .label {
+    color: white;
+}
+
+.orange {
+    background: linear-gradient(135deg, #F5A623 0%, #E89619 100%);
+}
+
+.white {
+    background: linear-gradient(135deg, #FFFFFF 0%, #F0F0F0 100%);
+}
+
+.light-green {
+    background: linear-gradient(135deg, #8BC34A 0%, #7CB342 100%);
+}
+
+.light-green .label {
+    color: white;
+}
+
+@media (max-width: 600px) {
+    .menu-grid {
+        gap: 15px;
+        padding: 10px;
+    }
+    
+    .menu-item {
+        padding: 30px 15px;
+    }
+    
+    .menu-item .icon {
+        font-size: 50px;
+    }
+    
+    .menu-item .label {
+        font-size: 18px;
+    }
+    
+    h1 {
+        font-size: 20px;
+    }
+    
+    h2 {
+        font-size: 14px;
+    }
+}
