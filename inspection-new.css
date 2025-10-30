@@ -1,0 +1,379 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f5f5f5;
+    direction: rtl;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.back-btn {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+}
+
+.date-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.date-section input {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.home-link {
+    color: #3498db;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+/* Logo Section */
+.logo-section {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.logo {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 15px;
+}
+
+.logo-section h2 {
+    color: #2c3e50;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+/* Section Headers */
+.section-header {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 25px 0 15px 0;
+    text-align: center;
+}
+
+/* Vehicle Information */
+.vehicle-info {
+    margin-bottom: 20px;
+}
+
+.info-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.info-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.info-field.full-width {
+    grid-column: 1 / -1;
+}
+
+.info-field label {
+    font-size: 14px;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.info-field input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* Inspection Table */
+.inspection-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.inspection-table thead {
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    color: white;
+}
+
+.inspection-table th {
+    padding: 12px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.inspection-table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.inspection-table tbody tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+.indicator {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    display: inline-block;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.indicator:hover {
+    transform: scale(1.1);
+}
+
+.indicator.healthy {
+    background: #3498db;
+    border-color: #2980b9;
+}
+
+.indicator.unhealthy {
+    background: #e74c3c;
+    border-color: #c0392b;
+}
+
+/* Car Diagram */
+.car-diagram-container {
+    text-align: center;
+    margin: 20px 0;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+}
+
+.car-diagram {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* Notes Section */
+.notes-section {
+    margin: 20px 0;
+}
+
+.notes-section label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.notes-section textarea {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    resize: vertical;
+    font-family: inherit;
+}
+
+/* Signatures */
+.signature-section {
+    margin: 30px 0;
+}
+
+.signature-section h3 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+.signature-row {
+    margin-bottom: 20px;
+}
+
+.signature-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.signature-field label {
+    font-size: 14px;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.signature-field input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    max-width: 300px;
+}
+
+.signature-canvas-container {
+    position: relative;
+    display: inline-block;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    background: white;
+}
+
+.signature-canvas-container canvas {
+    display: block;
+    touch-action: none;
+    cursor: crosshair;
+}
+
+.clear-btn {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 5px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.clear-btn:hover {
+    background: #c0392b;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 2px solid #e0e0e0;
+}
+
+.action-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    transition: all 0.3s;
+    min-width: 80px;
+}
+
+.action-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.action-btn svg {
+    width: 28px;
+    height: 28px;
+}
+
+.back-btn-bottom {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    color: white;
+}
+
+.whatsapp-btn {
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    color: white;
+}
+
+.copy-btn {
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    color: white;
+}
+
+.pdf-btn {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    color: white;
+}
+
+.save-btn {
+    background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+    color: white;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+    
+    .container {
+        padding: 15px;
+    }
+    
+    .header {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .info-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .action-buttons {
+        justify-content: center;
+    }
+    
+    .action-btn {
+        min-width: 70px;
+        padding: 12px 15px;
+    }
+    
+    .signature-canvas-container canvas {
+        width: 100%;
+        height: auto;
+    }
+}
