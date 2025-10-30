@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فحص السيارات - هيئة الهلال الأحمر السعودي</title>
+    <link rel="stylesheet" href="inspection.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <button class="back-btn" onclick="window.location.href='index.html'">← رجوع</button>
+            <div class="logo-small">
+                <svg width="60" height="60" viewBox="0 0 120 120">
+                    <circle cx="60" cy="60" r="55" fill="none" stroke="#8B0000" stroke-width="3"/>
+                    <path d="M 45 60 Q 45 45, 60 45 Q 75 45, 75 60 Q 75 75, 60 85 Q 45 75, 45 60" fill="#C41E3A"/>
+                    <text x="60" y="65" font-size="40" fill="#006C35" text-anchor="middle" font-weight="bold">⚕</text>
+                </svg>
+                <div class="logo-text">
+                    <div>هيئة الهلال الأحمر السعودي</div>
+                    <div class="logo-en">SAUDI RED CRESCENT AUTHORITY</div>
+                </div>
+            </div>
+            <button class="date-btn">📅 <span id="current-date"></span></button>
+        </div>
+
+        <h1 class="page-title">فحص السيارات</h1>
+
+        <div class="car-info">
+            <div class="info-row">
+                <div class="info-field">
+                    <label>الإدارة العامة بالمنطقة الشرقية</label>
+                    <input type="text" placeholder="أدخل الإدارة">
+                </div>
+                <div class="info-field">
+                    <label>رقم العداد</label>
+                    <input type="text" placeholder="أدخل رقم العداد">
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-field">
+                    <label>النوع</label>
+                    <input type="text" placeholder="أدخل النوع">
+                </div>
+                <div class="info-field">
+                    <label>رقم اللوحة</label>
+                    <input type="text" placeholder="أدخل رقم اللوحة">
+                </div>
+            </div>
+        </div>
+
+        <div class="inspection-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>البند</th>
+                        <th>سليم</th>
+                        <th>غير سليم</th>
+                    </tr>
+                </thead>
+                <tbody id="inspection-items">
+                    <!-- سيتم ملؤها بواسطة JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="car-image-section">
+            <img src="https://via.placeholder.com/600x200/CCCCCC/666666?text=صورة+السيارة" alt="صورة السيارة" class="car-image">
+        </div>
+
+        <div class="notes-section">
+            <label>الملاحظات</label>
+            <textarea placeholder="أدخل الملاحظات هنا..."></textarea>
+        </div>
+
+        <div class="signature-section">
+            <div class="signature-box">
+                <label>المسلم</label>
+                <canvas id="submitter-signature" width="300" height="150"></canvas>
+                <button class="clear-btn" onclick="clearSignature('submitter-signature')">مسح</button>
+                <input type="text" placeholder="الاسم" class="name-input">
+            </div>
+            <div class="signature-box">
+                <label>المستلم</label>
+                <canvas id="receiver-signature" width="300" height="150"></canvas>
+                <button class="clear-btn" onclick="clearSignature('receiver-signature')">مسح</button>
+                <input type="text" placeholder="الاسم" class="name-input">
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <button class="action-btn" onclick="saveData()">💾 حفظ</button>
+            <button class="action-btn" onclick="copyTable()">📋 نسخ</button>
+            <button class="action-btn" onclick="shareWhatsApp()">📱 واتساب</button>
+            <button class="action-btn" onclick="exportPDF()">📄 PDF</button>
+        </div>
+    </div>
+
+    <script src="inspection.js"></script>
+</body>
+</html>
