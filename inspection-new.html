@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>فحص السيارات - هيئة الهلال الأحمر السعودي</title>
     <link rel="stylesheet" href="inspection-new.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -130,7 +132,7 @@
 
         <!-- Action Buttons -->
         <div class="action-buttons">
-            <button class="action-btn back-btn-bottom" onclick="window.location.href='index.html'">
+            <button class="action-btn back-btn-bottom" onclick="createNew()">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                     <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                 </svg>

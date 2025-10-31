@@ -171,8 +171,8 @@ body {
 }
 
 .indicator.healthy {
-    background: #3498db;
-    border-color: #2980b9;
+    background: #27ae60;
+    border-color: #229954;
 }
 
 .indicator.unhealthy {

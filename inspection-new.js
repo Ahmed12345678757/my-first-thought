@@ -305,5 +305,91 @@ function shareWhatsApp() {
 
 // Generate PDF
 function generatePDF() {
-    alert('جاري إنشاء ملف PDF...\nهذه الميزة تتطلب مكتبة خارجية مثل jsPDF.\nيمكنك استخدام زر "نسخ" أو "مشاركة واتساب" في الوقت الحالي.');
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF('p', 'mm', 'a4');
+    
+    // Add Arabic font support
+    doc.setFont('helvetica');
+    doc.setFontSize(16);
+    
+    // Title
+    doc.text('Vehicle Inspection Report', 105, 20, { align: 'center' });
+    
+    // Date
+    doc.setFontSize(12);
+    const date = document.getElementById('inspection-date').value;
+    doc.text(`Date: ${date}`, 20, 35);
+    
+    // Vehicle Info
+    doc.setFontSize(14);
+    doc.text('Vehicle Information:', 20, 50);
+    doc.setFontSize(11);
+    doc.text(`Department: ${document.getElementById('department').value}`, 20, 60);
+    doc.text(`Odometer: ${document.getElementById('odometer').value}`, 20, 67);
+    doc.text(`Type: ${document.getElementById('vehicle-type').value}`, 20, 74);
+    doc.text(`Plate: ${document.getElementById('plate-number').value}`, 20, 81);
+    
+    // Inspection Results
+    doc.setFontSize(14);
+    doc.text('Inspection Results:', 20, 95);
+    doc.setFontSize(10);
+    
+    const results = getInspectionResults();
+    let yPos = 105;
+    inspectionItems.forEach((item, index) => {
+        const status = results[index] === 'healthy' ? 'OK' : 
+                      results[index] === 'unhealthy' ? 'NOT OK' : 'N/A';
+        doc.text(`${index + 1}. ${item}: ${status}`, 20, yPos);
+        yPos += 7;
+        
+        if (yPos > 270) {
+            doc.addPage();
+            yPos = 20;
+        }
+    });
+    
+    // Notes
+    const notes = document.getElementById('notes').value;
+    if (notes) {
+        if (yPos > 250) {
+            doc.addPage();
+            yPos = 20;
+        }
+        doc.setFontSize(12);
+        doc.text('Notes:', 20, yPos);
+        yPos += 10;
+        doc.setFontSize(10);
+        const splitNotes = doc.splitTextToSize(notes, 170);
+        doc.text(splitNotes, 20, yPos);
+    }
+    
+    // Save PDF
+    doc.save(`vehicle-inspection-${date}.pdf`);
+    alert('تم إنشاء ملف PDF بنجاح!');
+}
+
+// Create new inspection (reset form)
+function createNew() {
+    if (confirm('هل تريد إنشاء فحص جديد؟ سيتم مسح جميع البيانات الحالية.')) {
+        // Reset all form fields
+        document.getElementById('inspection-date').value = new Date().toISOString().split('T')[0];
+        document.getElementById('department').value = '';
+        document.getElementById('odometer').value = '';
+        document.getElementById('vehicle-type').value = '';
+        document.getElementById('plate-number').value = '';
+        document.getElementById('maintenance').value = '';
+        document.getElementById('notes').value = '';
+        document.getElementById('submitter-name').value = '';
+        document.getElementById('receiver-name').value = '';
+        
+        // Clear all inspection indicators
+        const indicators = document.querySelectorAll('.indicator');
+        indicators.forEach(ind => ind.classList.remove('healthy', 'unhealthy'));
+        
+        // Clear signatures
+        clearSignature('submitter');
+        clearSignature('receiver');
+        
+        alert('تم إنشاء فحص جديد!');
+    }
 }
