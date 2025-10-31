@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سيارات الخدمة - هيئة الهلال الأحمر السعودي</title>
+    <link rel="stylesheet" href="service-cars.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <button class="back-button" onclick="window.location.href='index.html'">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+        </button>
+        
+        <div class="date-container">
+            <input type="date" class="date-input" id="date-input">
+        </div>
+    </header>
+
+    <!-- Logo Section -->
+    <div class="logo-section">
+        <img src="logo.png" alt="شعار الهلال الأحمر" class="logo">
+    </div>
+
+    <!-- Archive Button -->
+    <div class="archive-section">
+        <button class="archive-button" onclick="openArchive()">🗂️ الأرشيف</button>
+    </div>
+
+    <!-- Page Title -->
+    <h1 class="page-title">نموذج استلام وتسليم سيارة الخدمة</h1>
+
+    <!-- Form Container -->
+    <div class="form-container">
+        <!-- Row 1: Name and Department -->
+        <div class="form-row">
+            <div class="form-group">
+                <label>اسم المستلم</label>
+                <input type="text" id="receiver-name" placeholder="أدخل اسم المستلم">
+            </div>
+            <div class="form-group">
+                <label>الإدارة</label>
+                <input type="text" id="department" placeholder="أدخل الإدارة">
+            </div>
+        </div>
+
+        <!-- Row 2: Receive and Return Time -->
+        <div class="form-row">
+            <div class="form-group">
+                <label>وقت الاستلام</label>
+                <input type="time" id="receive-time">
+            </div>
+            <div class="form-group">
+                <label>وقت التسليم</label>
+                <input type="time" id="return-time">
+            </div>
+        </div>
+
+        <!-- Row 3: Purpose -->
+        <div class="form-group full-width">
+            <label>الغرض من الاستلام</label>
+            <textarea id="purpose" rows="3" placeholder="اكتب الغرض من استلام السيارة"></textarea>
+        </div>
+
+        <!-- Row 4: Receiver Signature -->
+        <div class="form-group full-width">
+            <label>توقيع المستلم</label>
+            <div class="signature-container">
+                <canvas id="receiver-signature" width="600" height="150"></canvas>
+                <button class="clear-button" onclick="clearSignature('receiver-signature')">مسح</button>
+            </div>
+        </div>
+
+        <!-- Row 5: Notes -->
+        <div class="form-group full-width">
+            <label>الملاحظات</label>
+            <textarea id="notes" rows="3" placeholder="اكتب أي ملاحظات إضافية"></textarea>
+        </div>
+
+        <!-- Car Diagram -->
+        <div class="car-diagram-section">
+            <h3>مخطط السيارة</h3>
+            <img src="car-diagram.png" alt="مخطط السيارة" class="car-diagram">
+        </div>
+
+        <!-- Maintenance Manager Section -->
+        <div class="manager-section">
+            <h3>توقيع مدير الصيانة</h3>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>الاسم</label>
+                    <input type="text" id="manager-name" placeholder="أدخل اسم مدير الصيانة">
+                </div>
+                <div class="form-group">
+                    <label>التوقيع</label>
+                    <div class="signature-container">
+                        <canvas id="manager-signature" width="300" height="150"></canvas>
+                        <button class="clear-button" onclick="clearSignature('manager-signature')">مسح</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="submit-button" onclick="saveForm()">حفظ المتغيرات</button>
+            <button class="pdf-button" onclick="sendPDF()">إرسال PDF</button>
+        </div>
+    </div>
+
+    <!-- Archive Modal -->
+    <div id="archive-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeArchive()">&times;</span>
+            <h2>الأرشيف - البحث بالتاريخ</h2>
+            
+            <div class="archive-search">
+                <label>اختر التاريخ:</label>
+                <input type="date" id="archive-date" onchange="searchByDate()">
+            </div>
+
+            <div id="archive-results"></div>
+        </div>
+    </div>
+
+    <script src="service-cars.js"></script>
+</body>
+</html>
