@@ -108,7 +108,7 @@ document.getElementById('permission-return').addEventListener('change', function
     }
 });
 
-// Generate PDF function
+// Generate JPG function
 async function generatePDF() {
     try {
         const container = document.getElementById('pdf-content');
@@ -149,13 +149,14 @@ async function generatePDF() {
         // Wait a bit for styles to apply
         await new Promise(resolve => setTimeout(resolve, 100));
         
-        // Capture the page as canvas with good quality
+        // Capture the page as canvas with high quality
         const canvas = await html2canvas(container, {
-            scale: 2,
+            scale: 3,
             useCORS: true,
             logging: false,
             backgroundColor: '#ffffff',
-            windowHeight: container.scrollHeight
+            windowHeight: container.scrollHeight,
+            height: container.scrollHeight
         });
         
         // Restore original styles
@@ -170,63 +171,20 @@ async function generatePDF() {
         });
         signatureCanvas.style.height = originalCanvasHeight;
         
-        // Create PDF
-        const imgData = canvas.toDataURL('image/jpeg', 0.85);
-        const { jsPDF } = window.jspdf;
-        const pdf = new jsPDF({
-            orientation: 'portrait',
-            unit: 'mm',
-            format: 'a4',
-            compress: true
-        });
-        
-        // A4 dimensions
-        const pdfWidth = 210;
-        const pdfHeight = 297;
-        const margin = 10;
-        
-        // Calculate dimensions to maintain aspect ratio
-        const availableWidth = pdfWidth - (margin * 2);
-        const imgWidth = availableWidth;
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
-        
-        // If content fits in one page, add it
-        if (imgHeight <= pdfHeight - (margin * 2)) {
-            pdf.addImage(imgData, 'JPEG', margin, margin, imgWidth, imgHeight, undefined, 'FAST');
-        } else {
-            // Content is too tall - split across multiple pages
-            let yPosition = 0;
-            const pageHeight = pdfHeight - (margin * 2);
-            
-            while (yPosition < canvas.height) {
-                // Create canvas for this page section
-                const sectionCanvas = document.createElement('canvas');
-                const sectionHeight = Math.min(canvas.height - yPosition, (pageHeight * canvas.width) / imgWidth);
-                
-                sectionCanvas.width = canvas.width;
-                sectionCanvas.height = sectionHeight;
-                
-                const sectionCtx = sectionCanvas.getContext('2d');
-                sectionCtx.drawImage(canvas, 0, yPosition, canvas.width, sectionHeight, 0, 0, canvas.width, sectionHeight);
-                
-                const sectionData = sectionCanvas.toDataURL('image/jpeg', 0.85);
-                const sectionImgHeight = (sectionHeight * imgWidth) / canvas.width;
-                
-                if (yPosition > 0) {
-                    pdf.addPage();
-                }
-                
-                pdf.addImage(sectionData, 'JPEG', margin, margin, imgWidth, sectionImgHeight, undefined, 'FAST');
-                yPosition += sectionHeight;
-            }
-        }
+        // Create JPG image
+        const imgData = canvas.toDataURL('image/jpeg', 0.95);
         
         // Generate filename with date
         const date = document.getElementById('form-date').value || 'permission';
-        const filename = `استئذان_${date}.pdf`;
+        const filename = `استئذان_${date}.jpg`;
         
-        pdf.save(filename);
-        alert('تم إنشاء ملف PDF بنجاح!');
+        // Create download link
+        const link = document.createElement('a');
+        link.href = imgData;
+        link.download = filename;
+        link.click();
+        
+        alert('تم إنشاء ملف الصورة بنجاح!');
     } catch (error) {
         console.error('Error generating PDF:', error);
         alert('حدث خطأ أثناء إنشاء ملف PDF');
