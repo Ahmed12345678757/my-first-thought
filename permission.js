@@ -184,26 +184,14 @@ async function generatePDF() {
         // A4 dimensions
         const pdfWidth = 210;
         const pdfHeight = 297;
-        const margin = 5;
+        const margin = 10;
         
-        // Calculate dimensions to fit in one page
-        const availableWidth = pdfWidth - (margin * 2);
-        const availableHeight = pdfHeight - (margin * 2);
+        // Calculate dimensions - use full width
+        const imgWidth = pdfWidth - (margin * 2);
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
         
-        // Calculate image dimensions
-        const imgWidth = availableWidth;
-        let imgHeight = (canvas.height * imgWidth) / canvas.width;
-        
-        // Force fit in one page
-        if (imgHeight > availableHeight) {
-            imgHeight = availableHeight;
-        }
-        
-        // Center vertically if there's space
-        const yPosition = margin + (availableHeight - imgHeight) / 2;
-        
-        // Add image to PDF
-        pdf.addImage(imgData, 'JPEG', margin, yPosition, imgWidth, imgHeight, undefined, 'FAST');
+        // Add image to PDF at full size (may span multiple pages)
+        pdf.addImage(imgData, 'JPEG', margin, margin, imgWidth, imgHeight, undefined, 'FAST');
         
         // Generate filename with date
         const date = document.getElementById('form-date').value || 'permission';
