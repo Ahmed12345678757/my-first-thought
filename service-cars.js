@@ -192,16 +192,12 @@ function displayArchiveResults(records, date) {
         html += `
             <div class="archive-item">
                 <h4>السجل رقم ${index + 1}</h4>
-                <p><strong>اسم المستلم:</strong> ${record.receiverName}</p>
-                <p><strong>الإدارة:</strong> ${record.department}</p>
-                <p><strong>وقت الاستلام:</strong> ${record.receiveTime}</p>
-                <p><strong>وقت التسليم:</strong> ${record.returnTime || 'لم يتم التسليم بعد'}</p>
-                <p><strong>الغرض:</strong> ${record.purpose}</p>
-                ${record.notes ? `<p><strong>الملاحظات:</strong> ${record.notes}</p>` : ''}
-                <p><strong>مدير الصيانة:</strong> ${record.managerName || 'غير محدد'}</p>
-                <button class="submit-button" style="margin-top: 10px; padding: 8px 20px; font-size: 14px;" onclick="viewFullRecord(${records.indexOf(record)})">
-                    عرض التفاصيل الكاملة
-                </button>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px;">
+                    <p><strong>اسم مستلم السيارة:</strong> ${record.receiverName}</p>
+                    <p><strong>الإدارة:</strong> ${record.department}</p>
+                    <p><strong>وقت الاستلام:</strong> ${record.receiveTime}</p>
+                    <p><strong>وقت التسليم:</strong> ${record.returnTime || 'لم يتم التسليم بعد'}</p>
+                </div>
             </div>
         `;
     });
