@@ -7,241 +7,78 @@
     <link rel="stylesheet" href="reports.css">
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <div class="header-top">
-                <button class="back-btn" onclick="window.location.href='index.html'">←</button>
-                <input type="date" id="currentDate" class="date-input">
-            </div>
-            <div class="header-logo">
-                <img src="logo.png" alt="شعار الهلال الأحمر" class="logo">
-            </div>
-        </div>
+    <!-- الرأس -->
+    <div class="header">
+        <button class="back-btn" onclick="window.location.href='index.html'">←</button>
+        <input type="date" id="currentDate" class="date-input">
+    </div>
+    <div class="logo-container">
+        <img src="logo.png" alt="شعار الهلال الأحمر" class="logo">
+    </div>
 
-        <h1>التقارير</h1>
-        <p class="subtitle">تقارير شاملة عن المركبات - هيئة الهلال الأحمر السعودي</p>
+    <!-- العنوان -->
+    <h1 class="title">التقارير</h1>
+    <p class="subtitle">تقارير شاملة عن المركبات - هيئة الهلال الأحمر السعودي</p>
 
-        <!-- Report Type Selection -->
-        <div class="report-selection">
-            <label for="reportType">نوع التقرير:</label>
-            <select id="reportType" onchange="changeReportType()">
-                <option value="vehicles">تقرير المركبات</option>
-                <option value="documents">تقرير المستندات</option>
-                <option value="inspections">تقرير الفحوصات</option>
-                <option value="service">تقرير سيارات الخدمة</option>
-                <option value="status">تقرير حالة المركبات</option>
-            </select>
-        </div>
+    <!-- اختيار نوع التقرير -->
+    <div class="report-selection">
+        <label for="reportType">نوع التقرير:</label>
+        <select id="reportType" onchange="changeReportType()">
+            <option value="vehicles">تقرير المركبات</option>
+            <option value="documents">تقرير المستندات</option>
+            <option value="inspections">تقرير الفحوصات</option>
+            <option value="service">تقرير سيارات الخدمة</option>
+            <option value="status">تقرير حالة المركبات</option>
+        </select>
+    </div>
 
-        <!-- Date Range Filter -->
-        <div class="date-filter">
-            <div class="date-group">
-                <label for="startDate">من تاريخ:</label>
-                <input type="date" id="startDate">
-            </div>
-            <div class="date-group">
-                <label for="endDate">إلى تاريخ:</label>
-                <input type="date" id="endDate">
-            </div>
-            <button class="filter-btn" onclick="filterByDate()">تصفية</button>
-            <button class="reset-btn" onclick="resetFilter()">إعادة تعيين</button>
-        </div>
-
-        <!-- Report Content -->
-        <div id="reportContent" class="report-content">
-            <!-- Vehicles Report -->
-            <div id="vehiclesReport" class="report-section active">
-                <h2>تقرير المركبات الشامل</h2>
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-number" id="totalVehicles">0</div>
-                        <div class="stat-label">إجمالي المركبات</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="workingVehicles">0</div>
-                        <div class="stat-label">مركبات عاملة</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="repairVehicles">0</div>
-                        <div class="stat-label">قيد الإصلاح</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="reserveVehicles">0</div>
-                        <div class="stat-label">احتياط</div>
-                    </div>
+    <!-- محتوى التقرير -->
+    <div id="reportContent" class="report-content">
+        <!-- تقرير المركبات -->
+        <div id="vehiclesReport" class="report-section active">
+            <h2>تقرير المركبات الشامل</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalVehicles">0</div>
+                    <div class="stat-label">إجمالي المركبات</div>
                 </div>
-                <div class="table-container">
-                    <table id="vehiclesTable">
-                        <thead>
-                            <tr>
-                                <th>الرقم</th>
-                                <th>النوع</th>
-                                <th>الموديل</th>
-                                <th>رقم اللوحة</th>
-                                <th>اسم المركز</th>
-                                <th>الحالة</th>
-                            </tr>
-                        </thead>
-                        <tbody id="vehiclesTableBody">
-                            <!-- Data will be loaded here -->
-                        </tbody>
-                    </table>
+                <div class="stat-card">
+                    <div class="stat-number" id="workingVehicles">0</div>
+                    <div class="stat-label">مركبات عاملة</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="repairVehicles">0</div>
+                    <div class="stat-label">قيد الإصلاح</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="reserveVehicles">0</div>
+                    <div class="stat-label">احتياط</div>
                 </div>
             </div>
-
-            <!-- Documents Report -->
-            <div id="documentsReport" class="report-section">
-                <h2>تقرير المستندات</h2>
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-number" id="totalDocuments">0</div>
-                        <div class="stat-label">إجمالي المستندات</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="expiringSoon">0</div>
-                        <div class="stat-label">تنتهي قريباً</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="expired">0</div>
-                        <div class="stat-label">منتهية الصلاحية</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="valid">0</div>
-                        <div class="stat-label">سارية المفعول</div>
-                    </div>
-                </div>
-                <div class="table-container">
-                    <table id="documentsTable">
-                        <thead>
-                            <tr>
-                                <th>الرقم</th>
-                                <th>اسم المستند</th>
-                                <th>رقم اللوحة</th>
-                                <th>تاريخ الانتهاء</th>
-                                <th>الحالة</th>
-                            </tr>
-                        </thead>
-                        <tbody id="documentsTableBody">
-                            <!-- Data will be loaded here -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Inspections Report -->
-            <div id="inspectionsReport" class="report-section">
-                <h2>تقرير الفحوصات</h2>
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-number" id="totalInspections">0</div>
-                        <div class="stat-label">إجمالي الفحوصات</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="passedInspections">0</div>
-                        <div class="stat-label">فحوصات ناجحة</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="failedInspections">0</div>
-                        <div class="stat-label">فحوصات فاشلة</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="pendingInspections">0</div>
-                        <div class="stat-label">قيد المراجعة</div>
-                    </div>
-                </div>
-                <div class="table-container">
-                    <table id="inspectionsTable">
-                        <thead>
-                            <tr>
-                                <th>الرقم</th>
-                                <th>رقم اللوحة</th>
-                                <th>تاريخ الفحص</th>
-                                <th>النتيجة</th>
-                                <th>الملاحظات</th>
-                            </tr>
-                        </thead>
-                        <tbody id="inspectionsTableBody">
-                            <!-- Data will be loaded here -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Service Cars Report -->
-            <div id="serviceReport" class="report-section">
-                <h2>تقرير سيارات الخدمة</h2>
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-number" id="totalServices">0</div>
-                        <div class="stat-label">إجمالي العمليات</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="activeServices">0</div>
-                        <div class="stat-label">عمليات نشطة</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="completedServices">0</div>
-                        <div class="stat-label">عمليات مكتملة</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="avgDuration">0</div>
-                        <div class="stat-label">متوسط المدة (ساعات)</div>
-                    </div>
-                </div>
-                <div class="table-container">
-                    <table id="serviceTable">
-                        <thead>
-                            <tr>
-                                <th>الرقم</th>
-                                <th>اسم المستلم</th>
-                                <th>القسم</th>
-                                <th>وقت الاستلام</th>
-                                <th>وقت الإرجاع</th>
-                            </tr>
-                        </thead>
-                        <tbody id="serviceTableBody">
-                            <!-- Data will be loaded here -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Status Report -->
-            <div id="statusReport" class="report-section">
-                <h2>تقرير حالة المركبات</h2>
-                <div class="chart-container">
-                    <canvas id="statusChart"></canvas>
-                </div>
-                <div class="status-summary">
-                    <h3>ملخص الحالة</h3>
-                    <div class="status-list">
-                        <div class="status-item">
-                            <span class="status-dot working"></span>
-                            <span class="status-text">عاملة: <strong id="statusWorking">0</strong></span>
-                        </div>
-                        <div class="status-item">
-                            <span class="status-dot repair"></span>
-                            <span class="status-text">قيد الإصلاح: <strong id="statusRepair">0</strong></span>
-                        </div>
-                        <div class="status-item">
-                            <span class="status-dot reserve"></span>
-                            <span class="status-text">احتياط: <strong id="statusReserve">0</strong></span>
-                        </div>
-                        <div class="status-item">
-                            <span class="status-dot broken"></span>
-                            <span class="status-text">عطلانة: <strong id="statusBroken">0</strong></span>
-                        </div>
-                    </div>
-                </div>
+            <div class="table-container">
+                <table id="vehiclesTable">
+                    <thead>
+                        <tr>
+                            <th>الرقم</th>
+                            <th>النوع</th>
+                            <th>الموديل</th>
+                            <th>رقم اللوحة</th>
+                            <th>اسم المركز</th>
+                            <th>الحالة</th>
+                        </tr>
+                    </thead>
+                    <tbody id="vehiclesTableBody">
+                        <!-- سيتم ملء البيانات من JavaScript -->
+                    </tbody>
+                </table>
             </div>
         </div>
+    </div>
 
-        <!-- Action Buttons -->
-        <div class="action-buttons">
-            <button class="print-btn" onclick="generatePDF()">PDF</button>
-            <button class="save-btn" onclick="printReport()">حفظ</button>
-        </div>
+    <!-- الأزرار السفلية -->
+    <div class="bottom-buttons">
+        <button class="save-btn" onclick="saveReport()">حفظ</button>
+        <button class="pdf-btn" onclick="generatePDF()">PDF</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
