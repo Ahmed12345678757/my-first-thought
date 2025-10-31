@@ -183,23 +183,22 @@ async function generatePDF() {
         // A4 dimensions with margins
         const pdfWidth = 210;
         const pdfHeight = 297;
-        const margin = 5;
+        const margin = 10;
         const availableWidth = pdfWidth - (margin * 2);
         const availableHeight = pdfHeight - (margin * 2);
         
-        // Calculate image dimensions to fit in one page
+        // Calculate image dimensions - ALWAYS use full width
         const imgWidth = availableWidth;
         const imgHeight = (canvas.height * availableWidth) / canvas.width;
         
-        // Always scale to fit in one page
+        // Scale to fit height if needed, but maintain full width
         if (imgHeight > availableHeight) {
-            const scale = availableHeight / imgHeight;
-            const scaledWidth = imgWidth * scale;
-            const scaledHeight = availableHeight;
-            const xOffset = margin + (availableWidth - scaledWidth) / 2;
-            pdf.addImage(imgData, 'JPEG', xOffset, margin, scaledWidth, scaledHeight, undefined, 'FAST');
+            // Compress vertically to fit in one page while keeping full width
+            pdf.addImage(imgData, 'JPEG', margin, margin, imgWidth, availableHeight, undefined, 'FAST');
         } else {
-            pdf.addImage(imgData, 'JPEG', margin, margin, imgWidth, imgHeight, undefined, 'FAST');
+            // Use full width, center vertically
+            const yOffset = margin + (availableHeight - imgHeight) / 2;
+            pdf.addImage(imgData, 'JPEG', margin, yOffset, imgWidth, imgHeight, undefined, 'FAST');
         }
         
         // Generate filename with date

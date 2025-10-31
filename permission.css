@@ -101,15 +101,15 @@ body {
 }
 
 .info-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
     gap: 15px;
     margin-bottom: 15px;
 }
 
 .info-field {
-    display: flex;
-    flex-direction: row;
+    display: flex !important;
+    flex-direction: row !important;
     align-items: center;
     gap: 10px;
 }
