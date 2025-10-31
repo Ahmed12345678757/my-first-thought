@@ -485,21 +485,7 @@ body {
     }
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .info-row {
-        grid-template-columns: 1fr;
-    }
-    
-    .permission-row {
-        grid-template-columns: 1fr;
-    }
-    
-    .permission-label {
-        border-left: none;
-        border-bottom: 2px solid #333;
-    }
-    
+/* Responsive - Removed to keep fields side-by-side on all screens */   
     .purpose-row {
         grid-template-columns: 1fr;
     }
