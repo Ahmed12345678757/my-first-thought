@@ -180,25 +180,29 @@ async function generatePDF() {
             compress: true
         });
         
-        // A4 dimensions with margins
+        // A4 dimensions
         const pdfWidth = 210;
         const pdfHeight = 297;
-        const margin = 10;
-        const availableWidth = pdfWidth - (margin * 2);
-        const availableHeight = pdfHeight - (margin * 2);
+        const margin = 15;
         
-        // Calculate image dimensions - ALWAYS use full width
-        const imgWidth = availableWidth;
-        const imgHeight = (canvas.height * availableWidth) / canvas.width;
+        // Use 85% of page width for better readability (not too wide)
+        const contentWidth = (pdfWidth - (margin * 2)) * 0.85;
+        const contentHeight = (canvas.height * contentWidth) / canvas.width;
         
-        // Scale to fit height if needed, but maintain full width
-        if (imgHeight > availableHeight) {
-            // Compress vertically to fit in one page while keeping full width
-            pdf.addImage(imgData, 'JPEG', margin, margin, imgWidth, availableHeight, undefined, 'FAST');
+        // Center horizontally
+        const xOffset = (pdfWidth - contentWidth) / 2;
+        
+        // Check if fits in one page
+        if (contentHeight <= pdfHeight - (margin * 2)) {
+            // Fits in one page - center vertically
+            const yOffset = (pdfHeight - contentHeight) / 2;
+            pdf.addImage(imgData, 'JPEG', xOffset, yOffset, contentWidth, contentHeight, undefined, 'SLOW');
         } else {
-            // Use full width, center vertically
-            const yOffset = margin + (availableHeight - imgHeight) / 2;
-            pdf.addImage(imgData, 'JPEG', margin, yOffset, imgWidth, imgHeight, undefined, 'FAST');
+            // Too tall - scale down to fit
+            const scaledHeight = pdfHeight - (margin * 2);
+            const scaledWidth = (canvas.width * scaledHeight) / canvas.height;
+            const scaledXOffset = (pdfWidth - scaledWidth) / 2;
+            pdf.addImage(imgData, 'JPEG', scaledXOffset, margin, scaledWidth, scaledHeight, undefined, 'SLOW');
         }
         
         // Generate filename with date
