@@ -113,50 +113,93 @@ async function generatePDF() {
     try {
         const container = document.getElementById('pdf-content');
         
+        // Store original styles
+        const originalPadding = container.style.padding;
+        const originalFontSize = document.body.style.fontSize;
+        
+        // Apply compact styles for PDF
+        container.style.padding = '10px';
+        document.body.style.fontSize = '10px';
+        
         // Hide elements that shouldn't be in PDF
         const noprint = document.querySelectorAll('.no-print');
         noprint.forEach(el => el.style.display = 'none');
         
-        // Capture the page as canvas
+        // Reduce logo size
+        const logo = document.querySelector('.logo');
+        const originalLogoWidth = logo.style.width;
+        const originalLogoHeight = logo.style.height;
+        logo.style.width = '50px';
+        logo.style.height = '50px';
+        
+        // Reduce section header padding
+        const sectionHeaders = document.querySelectorAll('.section-header');
+        const originalHeaderPaddings = [];
+        sectionHeaders.forEach(header => {
+            originalHeaderPaddings.push(header.style.padding);
+            header.style.padding = '6px 12px';
+            header.style.fontSize = '12px';
+        });
+        
+        // Reduce signature canvas height
+        const signatureCanvas = document.getElementById('supervisor-signature');
+        const originalCanvasHeight = signatureCanvas.style.height;
+        signatureCanvas.style.height = '80px';
+        
+        // Wait a bit for styles to apply
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
+        // Capture the page as canvas with higher compression
         const canvas = await html2canvas(container, {
-            scale: 2,
+            scale: 1.5,
             useCORS: true,
             logging: false,
             backgroundColor: '#ffffff',
             windowHeight: container.scrollHeight
         });
         
-        // Show hidden elements again
+        // Restore original styles
+        container.style.padding = originalPadding;
+        document.body.style.fontSize = originalFontSize;
         noprint.forEach(el => el.style.display = '');
+        logo.style.width = originalLogoWidth;
+        logo.style.height = originalLogoHeight;
+        sectionHeaders.forEach((header, i) => {
+            header.style.padding = originalHeaderPaddings[i];
+            header.style.fontSize = '';
+        });
+        signatureCanvas.style.height = originalCanvasHeight;
         
         // Create PDF
-        const imgData = canvas.toDataURL('image/png');
+        const imgData = canvas.toDataURL('image/jpeg', 0.85);
         const { jsPDF } = window.jspdf;
         const pdf = new jsPDF({
             orientation: 'portrait',
             unit: 'mm',
-            format: 'a4'
+            format: 'a4',
+            compress: true
         });
         
-        // A4 dimensions
-        const pdfWidth = 210; // A4 width in mm
-        const pdfHeight = 297; // A4 height in mm
+        // A4 dimensions with margins
+        const pdfWidth = 210;
+        const pdfHeight = 297;
+        const margin = 5;
+        const availableWidth = pdfWidth - (margin * 2);
+        const availableHeight = pdfHeight - (margin * 2);
         
         // Calculate image dimensions to fit in one page
-        const imgWidth = pdfWidth;
-        const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+        const imgWidth = availableWidth;
+        const imgHeight = (canvas.height * availableWidth) / canvas.width;
         
-        // If image is taller than A4, scale it down
-        if (imgHeight > pdfHeight) {
-            const scale = pdfHeight / imgHeight;
+        // Always scale to fit in one page
+        if (imgHeight > availableHeight) {
+            const scale = availableHeight / imgHeight;
             const scaledWidth = imgWidth * scale;
-            const scaledHeight = pdfHeight;
-            const xOffset = (pdfWidth - scaledWidth) / 2;
-            pdf.addImage(imgData, 'PNG', xOffset, 0, scaledWidth, scaledHeight);
+            const scaledHeight = availableHeight;
+            const xOffset = margin + (availableWidth - scaledWidth) / 2;
+            pdf.addImage(imgData, 'JPEG', xOffset, margin, scaledWidth, scaledHeight, undefined, 'FAST');
         } else {
-            // Center vertically if shorter than A4
-            const yOffset = (pdfHeight - imgHeight) / 2;
-            pdf.addImage(imgData, 'PNG', 0, yOffset, imgWidth, imgHeight);
+            pdf.addImage(imgData, 'JPEG', margin, margin, imgWidth, imgHeight, undefined, 'FAST');
         }
         
         // Generate filename with date

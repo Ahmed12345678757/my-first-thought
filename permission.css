@@ -346,12 +346,130 @@ body {
     body {
         background: white;
         padding: 0;
+        font-size: 11px;
     }
     
     .container {
         box-shadow: none;
-        padding: 20px;
+        padding: 15px;
         max-width: 100%;
+    }
+    
+    .logo {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 8px;
+    }
+    
+    .logo-section h2 {
+        font-size: 18px;
+        margin-bottom: 5px;
+    }
+    
+    .subtitle {
+        font-size: 11px;
+    }
+    
+    .section-header {
+        padding: 8px 15px;
+        margin: 12px 0 10px 0;
+        font-size: 13px;
+    }
+    
+    .info-row {
+        margin-bottom: 8px;
+        gap: 10px;
+    }
+    
+    .info-field label {
+        font-size: 11px;
+        min-width: 90px;
+    }
+    
+    .info-field input {
+        padding: 6px;
+        font-size: 11px;
+    }
+    
+    .permission-type-table {
+        margin-bottom: 12px;
+    }
+    
+    .permission-label {
+        padding: 10px;
+        font-size: 11px;
+    }
+    
+    .permission-options {
+        padding: 10px;
+        gap: 6px;
+    }
+    
+    .option-item label {
+        font-size: 11px;
+    }
+    
+    .option-item span {
+        font-size: 10px;
+    }
+    
+    .time-input {
+        padding: 4px 8px;
+        font-size: 10px;
+    }
+    
+    .purpose-input {
+        padding: 6px 10px;
+        font-size: 11px;
+    }
+    
+    .approval-section {
+        margin-bottom: 12px;
+    }
+    
+    .approval-field {
+        margin-bottom: 10px;
+    }
+    
+    .approval-field label {
+        font-size: 11px;
+        margin-bottom: 4px;
+    }
+    
+    .approval-field input {
+        padding: 6px;
+        font-size: 11px;
+    }
+    
+    .signature-row {
+        margin-bottom: 10px;
+    }
+    
+    .signature-row label {
+        font-size: 11px;
+        margin-bottom: 6px;
+    }
+    
+    #supervisor-signature {
+        height: 100px;
+    }
+    
+    .signature-canvas-container {
+        padding: 6px;
+    }
+    
+    .header {
+        margin-bottom: 12px;
+        padding-bottom: 10px;
+    }
+    
+    .date-section {
+        font-size: 11px;
+    }
+    
+    .date-section input {
+        padding: 4px;
+        font-size: 10px;
     }
     
     .no-print {
