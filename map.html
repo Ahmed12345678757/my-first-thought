@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متابعة السيارات - هيئة الهلال الأحمر السعودي</title>
+    <link rel="stylesheet" href="map.css">
+</head>
+<body>
+    <!-- الرأس -->
+    <div class="header">
+        <button class="back-btn" onclick="window.location.href='index.html'">←</button>
+        <input type="date" id="currentDate" class="date-input">
+        <img src="logo.png" alt="شعار الهلال الأحمر" class="logo">
+    </div>
+
+    <!-- العنوان -->
+    <h1 class="title">متابعة السيارات</h1>
+    <p class="subtitle">جدول متابعة أسطول السيارات - هيئة الهلال الأحمر السعودي</p>
+
+    <!-- البحث -->
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="🔍 البحث برقم اللوحة..." oninput="searchVehicle()">
+    </div>
+
+    <!-- زر إضافة سيارة -->
+    <button class="add-vehicle-btn" onclick="openAddModal()">➕ إضافة سيارة</button>
+
+    <!-- الجدول -->
+    <div class="table-container">
+        <table id="vehicleTable">
+            <thead>
+                <tr>
+                    <th>العدد</th>
+                    <th>النوع</th>
+                    <th>الموديل</th>
+                    <th>رقم اللوحة</th>
+                    <th>رقم الشاسيه</th>
+                    <th>اسم المركز</th>
+                    <th>الحالة</th>
+                    <th>ملاحظات</th>
+                </tr>
+            </thead>
+            <tbody id="vehicleTableBody">
+                <!-- سيتم ملء الصفوف من JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- الأزرار السفلية -->
+    <div class="bottom-buttons">
+        <button class="save-btn" onclick="saveData()">💾 حفظ المتغيرات</button>
+        <button class="pdf-btn" onclick="sendPDF()">📄 إرسال PDF</button>
+    </div>
+
+    <!-- نافذة إضافة سيارة -->
+    <div id="addModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeAddModal()">&times;</span>
+            <h2>إضافة سيارة جديدة</h2>
+            <div class="form-group">
+                <label>النوع:</label>
+                <input type="text" id="newType" placeholder="مثال: هايلوكس">
+            </div>
+            <div class="form-group">
+                <label>الموديل:</label>
+                <input type="text" id="newModel" placeholder="مثال: 2024">
+            </div>
+            <div class="form-group">
+                <label>رقم اللوحة:</label>
+                <input type="text" id="newPlate" placeholder="مثال: أ ب ج 1234">
+            </div>
+            <div class="form-group">
+                <label>رقم الشاسيه:</label>
+                <input type="text" id="newChassis" placeholder="مثال: 12345">
+            </div>
+            <div class="form-group">
+                <label>اسم المركز:</label>
+                <input type="text" id="newCenter" placeholder="مثال: الرياض">
+            </div>
+            <div class="form-group">
+                <label>الحالة:</label>
+                <select id="newStatus">
+                    <option value="عاملة">عاملة</option>
+                    <option value="قيد الإصلاح">قيد الإصلاح</option>
+                    <option value="احتياط">احتياط</option>
+                    <option value="عطلانة">عطلانة</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>ملاحظات:</label>
+                <textarea id="newNotes" placeholder="أدخل أي ملاحظات..."></textarea>
+            </div>
+            <div class="modal-buttons">
+                <button class="save-btn" onclick="addVehicle()">حفظ</button>
+                <button class="cancel-btn" onclick="closeAddModal()">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="map.js"></script>
+</body>
+</html>
