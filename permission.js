@@ -190,8 +190,38 @@ async function generatePDF() {
         const imgWidth = pdfWidth - (margin * 2);
         const imgHeight = (canvas.height * imgWidth) / canvas.width;
         
-        // Add image to PDF at full size (may span multiple pages)
-        pdf.addImage(imgData, 'JPEG', margin, margin, imgWidth, imgHeight, undefined, 'FAST');
+        // Calculate how many pages needed
+        const pageHeight = pdfHeight - (margin * 2);
+        let position = 0;
+        
+        // Add image across multiple pages if needed
+        while (position < imgHeight) {
+            if (position > 0) {
+                pdf.addPage();
+            }
+            
+            const remainingHeight = imgHeight - position;
+            const currentHeight = Math.min(pageHeight, remainingHeight);
+            
+            // Calculate source position in canvas
+            const sourceY = (position / imgHeight) * canvas.height;
+            const sourceHeight = (currentHeight / imgHeight) * canvas.height;
+            
+            // Create temporary canvas for this page
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = canvas.width;
+            tempCanvas.height = sourceHeight;
+            const tempCtx = tempCanvas.getContext('2d');
+            
+            // Draw portion of image
+            tempCtx.drawImage(canvas, 0, sourceY, canvas.width, sourceHeight, 0, 0, canvas.width, sourceHeight);
+            
+            // Convert to image and add to PDF
+            const tempImgData = tempCanvas.toDataURL('image/jpeg', 0.95);
+            pdf.addImage(tempImgData, 'JPEG', margin, margin, imgWidth, currentHeight, undefined, 'FAST');
+            
+            position += pageHeight;
+        }
         
         // Generate filename with date
         const date = document.getElementById('form-date').value || 'permission';
