@@ -40,22 +40,55 @@ body {
     background: #c82333;
 }
 
-.logo-container {
-    flex: 1;
+.date-toggle {
     display: flex;
-    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
 
-.logo {
-    height: 80px;
-    width: auto;
+.date-btn {
+    background: #f8f9fa;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    color: #666;
+}
+
+.date-btn.active {
+    background: #dc3545;
+    border-color: #dc3545;
+    color: white;
+}
+
+.date-btn:hover {
+    background: #e9ecef;
+}
+
+.date-btn.active:hover {
+    background: #c82333;
 }
 
 .date-display {
     font-size: 14px;
     color: #666;
-    min-width: 100px;
+    min-width: 120px;
     text-align: left;
+    font-weight: 500;
+}
+
+/* Logo Section */
+.logo-section {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.logo {
+    height: 100px;
+    width: auto;
 }
 
 /* Page Title */
@@ -64,6 +97,31 @@ body {
     color: #dc3545;
     font-size: 28px;
     margin-bottom: 30px;
+}
+
+/* Add Vehicle Button */
+.add-vehicle-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.add-vehicle-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 30px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.add-vehicle-btn:hover {
+    background: #c82333;
 }
 
 /* Search Section */
@@ -130,6 +188,11 @@ body {
     text-align: center;
     font-weight: 600;
     font-size: 16px;
+    border-left: 1px solid rgba(255,255,255,0.3);
+}
+
+.vehicles-table th:last-child {
+    border-left: none;
 }
 
 .vehicles-table tbody tr {
@@ -155,6 +218,11 @@ body {
     padding: 15px;
     text-align: center;
     font-size: 14px;
+    border-left: 1px solid #eee;
+}
+
+.vehicles-table td:last-child {
+    border-left: none;
 }
 
 .document-button {
@@ -349,6 +417,33 @@ body {
 
 .delete-button:hover {
     background: #c82333;
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #dc3545;
 }
 
 /* Responsive */
