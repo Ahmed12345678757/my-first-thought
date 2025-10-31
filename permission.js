@@ -171,20 +171,46 @@ async function generatePDF() {
         });
         signatureCanvas.style.height = originalCanvasHeight;
         
-        // Create JPG image
-        const imgData = canvas.toDataURL('image/jpeg', 0.95);
+        // Create PDF with aggressive compression
+        const imgData = canvas.toDataURL('image/jpeg', 0.85);
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF({
+            orientation: 'portrait',
+            unit: 'mm',
+            format: 'a4',
+            compress: true
+        });
+        
+        // A4 dimensions
+        const pdfWidth = 210;
+        const pdfHeight = 297;
+        const margin = 5;
+        
+        // Calculate dimensions to fit in one page
+        const availableWidth = pdfWidth - (margin * 2);
+        const availableHeight = pdfHeight - (margin * 2);
+        
+        // Calculate image dimensions
+        const imgWidth = availableWidth;
+        let imgHeight = (canvas.height * imgWidth) / canvas.width;
+        
+        // Force fit in one page
+        if (imgHeight > availableHeight) {
+            imgHeight = availableHeight;
+        }
+        
+        // Center vertically if there's space
+        const yPosition = margin + (availableHeight - imgHeight) / 2;
+        
+        // Add image to PDF
+        pdf.addImage(imgData, 'JPEG', margin, yPosition, imgWidth, imgHeight, undefined, 'FAST');
         
         // Generate filename with date
         const date = document.getElementById('form-date').value || 'permission';
-        const filename = `استئذان_${date}.jpg`;
+        const filename = `استئذان_${date}.pdf`;
         
-        // Create download link
-        const link = document.createElement('a');
-        link.href = imgData;
-        link.download = filename;
-        link.click();
-        
-        alert('تم إنشاء ملف الصورة بنجاح!');
+        pdf.save(filename);
+        alert('تم إنشاء ملف PDF بنجاح!');
     } catch (error) {
         console.error('Error generating PDF:', error);
         alert('حدث خطأ أثناء إنشاء ملف PDF');
