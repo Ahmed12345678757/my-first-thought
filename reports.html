@@ -21,9 +21,8 @@
     <p class="subtitle">تقارير شاملة عن المركبات - هيئة الهلال الأحمر السعودي</p>
 
     <!-- اختيار نوع التقرير -->
-    <div class="report-selection">
-        <label for="reportType">نوع التقرير:</label>
-        <select id="reportType" onchange="changeReportType()">
+    <div class="search-container">
+        <select id="reportType" class="report-select" onchange="changeReportType()">
             <option value="vehicles">تقرير المركبات</option>
             <option value="documents">تقرير المستندات</option>
             <option value="inspections">تقرير الفحوصات</option>
@@ -33,10 +32,10 @@
     </div>
 
     <!-- محتوى التقرير -->
-    <div id="reportContent" class="report-content">
+    <div id="reportContent" class="table-container">
         <!-- تقرير المركبات -->
         <div id="vehiclesReport" class="report-section active">
-            <h2>تقرير المركبات الشامل</h2>
+            <h2 style="text-align: center; color: #dc3545; margin-bottom: 20px;">تقرير المركبات الشامل</h2>
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-number" id="totalVehicles">0</div>
@@ -55,30 +54,28 @@
                     <div class="stat-label">احتياط</div>
                 </div>
             </div>
-            <div class="table-container">
-                <table id="vehiclesTable">
-                    <thead>
-                        <tr>
-                            <th>الرقم</th>
-                            <th>النوع</th>
-                            <th>الموديل</th>
-                            <th>رقم اللوحة</th>
-                            <th>اسم المركز</th>
-                            <th>الحالة</th>
-                        </tr>
-                    </thead>
-                    <tbody id="vehiclesTableBody">
-                        <!-- سيتم ملء البيانات من JavaScript -->
-                    </tbody>
-                </table>
-            </div>
+            <table id="vehiclesTable">
+                <thead>
+                    <tr>
+                        <th>الرقم</th>
+                        <th>النوع</th>
+                        <th>الموديل</th>
+                        <th>رقم اللوحة</th>
+                        <th>اسم المركز</th>
+                        <th>الحالة</th>
+                    </tr>
+                </thead>
+                <tbody id="vehiclesTableBody">
+                    <!-- سيتم ملء البيانات من JavaScript -->
+                </tbody>
+            </table>
         </div>
     </div>
 
     <!-- الأزرار السفلية -->
     <div class="bottom-buttons">
-        <button class="save-btn" onclick="saveReport()">حفظ</button>
-        <button class="pdf-btn" onclick="generatePDF()">PDF</button>
+        <button class="save-btn" onclick="saveReport()">💾 حفظ المتغيرات</button>
+        <button class="pdf-btn" onclick="generatePDF()">📄 إرسال PDF</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
