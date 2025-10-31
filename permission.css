@@ -101,24 +101,22 @@ body {
 }
 
 .info-row {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 15px;
     margin-bottom: 15px;
 }
 
 .info-field {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center;
-    gap: 10px;
+    display: flex;
+    flex-direction: column;
 }
 
 .info-field label {
     font-weight: bold;
+    margin-bottom: 5px;
     color: #333;
     font-size: 14px;
-    min-width: 120px;
 }
 
 .info-field input {
@@ -126,7 +124,6 @@ body {
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 14px;
-    flex: 1;
 }
 
 /* Permission Type Table - Matching the image */
@@ -346,130 +343,12 @@ body {
     body {
         background: white;
         padding: 0;
-        font-size: 11px;
     }
     
     .container {
         box-shadow: none;
-        padding: 15px;
+        padding: 20px;
         max-width: 100%;
-    }
-    
-    .logo {
-        width: 60px;
-        height: 60px;
-        margin-bottom: 8px;
-    }
-    
-    .logo-section h2 {
-        font-size: 18px;
-        margin-bottom: 5px;
-    }
-    
-    .subtitle {
-        font-size: 11px;
-    }
-    
-    .section-header {
-        padding: 8px 15px;
-        margin: 12px 0 10px 0;
-        font-size: 13px;
-    }
-    
-    .info-row {
-        margin-bottom: 8px;
-        gap: 10px;
-    }
-    
-    .info-field label {
-        font-size: 11px;
-        min-width: 90px;
-    }
-    
-    .info-field input {
-        padding: 6px;
-        font-size: 11px;
-    }
-    
-    .permission-type-table {
-        margin-bottom: 12px;
-    }
-    
-    .permission-label {
-        padding: 10px;
-        font-size: 11px;
-    }
-    
-    .permission-options {
-        padding: 10px;
-        gap: 6px;
-    }
-    
-    .option-item label {
-        font-size: 11px;
-    }
-    
-    .option-item span {
-        font-size: 10px;
-    }
-    
-    .time-input {
-        padding: 4px 8px;
-        font-size: 10px;
-    }
-    
-    .purpose-input {
-        padding: 6px 10px;
-        font-size: 11px;
-    }
-    
-    .approval-section {
-        margin-bottom: 12px;
-    }
-    
-    .approval-field {
-        margin-bottom: 10px;
-    }
-    
-    .approval-field label {
-        font-size: 11px;
-        margin-bottom: 4px;
-    }
-    
-    .approval-field input {
-        padding: 6px;
-        font-size: 11px;
-    }
-    
-    .signature-row {
-        margin-bottom: 10px;
-    }
-    
-    .signature-row label {
-        font-size: 11px;
-        margin-bottom: 6px;
-    }
-    
-    #supervisor-signature {
-        height: 100px;
-    }
-    
-    .signature-canvas-container {
-        padding: 6px;
-    }
-    
-    .header {
-        margin-bottom: 12px;
-        padding-bottom: 10px;
-    }
-    
-    .date-section {
-        font-size: 11px;
-    }
-    
-    .date-section input {
-        padding: 4px;
-        font-size: 10px;
     }
     
     .no-print {
@@ -485,7 +364,21 @@ body {
     }
 }
 
-/* Responsive - Removed to keep fields side-by-side on all screens */   
+/* Responsive */
+@media (max-width: 768px) {
+    .info-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .permission-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .permission-label {
+        border-left: none;
+        border-bottom: 2px solid #333;
+    }
+    
     .purpose-row {
         grid-template-columns: 1fr;
     }
