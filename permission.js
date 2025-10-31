@@ -117,41 +117,41 @@ async function generatePDF() {
         const originalPadding = container.style.padding;
         const originalFontSize = document.body.style.fontSize;
         
-        // Apply compact styles for PDF
-        container.style.padding = '10px';
-        document.body.style.fontSize = '10px';
+        // Apply normal styles for PDF (not too compressed)
+        container.style.padding = '20px';
+        document.body.style.fontSize = '12px';
         
         // Hide elements that shouldn't be in PDF
         const noprint = document.querySelectorAll('.no-print');
         noprint.forEach(el => el.style.display = 'none');
         
-        // Reduce logo size
+        // Keep logo at reasonable size
         const logo = document.querySelector('.logo');
         const originalLogoWidth = logo.style.width;
         const originalLogoHeight = logo.style.height;
-        logo.style.width = '50px';
-        logo.style.height = '50px';
+        logo.style.width = '80px';
+        logo.style.height = '80px';
         
-        // Reduce section header padding
+        // Keep section headers readable
         const sectionHeaders = document.querySelectorAll('.section-header');
         const originalHeaderPaddings = [];
         sectionHeaders.forEach(header => {
             originalHeaderPaddings.push(header.style.padding);
-            header.style.padding = '6px 12px';
-            header.style.fontSize = '12px';
+            header.style.padding = '10px 15px';
+            header.style.fontSize = '14px';
         });
         
-        // Reduce signature canvas height
+        // Keep signature canvas at reasonable height
         const signatureCanvas = document.getElementById('supervisor-signature');
         const originalCanvasHeight = signatureCanvas.style.height;
-        signatureCanvas.style.height = '80px';
+        signatureCanvas.style.height = '100px';
         
         // Wait a bit for styles to apply
         await new Promise(resolve => setTimeout(resolve, 100));
         
-        // Capture the page as canvas with higher compression
+        // Capture the page as canvas with good quality
         const canvas = await html2canvas(container, {
-            scale: 1.5,
+            scale: 2,
             useCORS: true,
             logging: false,
             backgroundColor: '#ffffff',
