@@ -94,8 +94,8 @@ body {
 }
 
 .add-vehicle-btn {
-    background: #dc3545;
-    color: white;
+    background: #c0c0c0;
+    color: #333;
     border: none;
     border-radius: 8px;
     padding: 12px 30px;
@@ -108,7 +108,7 @@ body {
 }
 
 .add-vehicle-btn:hover {
-    background: #c82333;
+    background: #a8a8a8;
 }
 
 /* Search Section */
