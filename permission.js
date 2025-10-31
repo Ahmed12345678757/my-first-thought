@@ -111,22 +111,23 @@ document.getElementById('permission-return').addEventListener('change', function
 // Generate PDF function
 async function generatePDF() {
     try {
-        const container = document.querySelector('.container');
+        const container = document.getElementById('pdf-content');
         
-        // Hide buttons before capturing
-        const buttons = document.querySelector('.action-buttons');
-        buttons.style.display = 'none';
+        // Hide elements that shouldn't be in PDF
+        const noprint = document.querySelectorAll('.no-print');
+        noprint.forEach(el => el.style.display = 'none');
         
         // Capture the page as canvas
         const canvas = await html2canvas(container, {
             scale: 2,
             useCORS: true,
             logging: false,
-            backgroundColor: '#ffffff'
+            backgroundColor: '#ffffff',
+            windowHeight: container.scrollHeight
         });
         
-        // Show buttons again
-        buttons.style.display = 'flex';
+        // Show hidden elements again
+        noprint.forEach(el => el.style.display = '');
         
         // Create PDF
         const imgData = canvas.toDataURL('image/png');
@@ -137,10 +138,26 @@ async function generatePDF() {
             format: 'a4'
         });
         
-        const imgWidth = 210; // A4 width in mm
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        // A4 dimensions
+        const pdfWidth = 210; // A4 width in mm
+        const pdfHeight = 297; // A4 height in mm
         
-        pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+        // Calculate image dimensions to fit in one page
+        const imgWidth = pdfWidth;
+        const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+        
+        // If image is taller than A4, scale it down
+        if (imgHeight > pdfHeight) {
+            const scale = pdfHeight / imgHeight;
+            const scaledWidth = imgWidth * scale;
+            const scaledHeight = pdfHeight;
+            const xOffset = (pdfWidth - scaledWidth) / 2;
+            pdf.addImage(imgData, 'PNG', xOffset, 0, scaledWidth, scaledHeight);
+        } else {
+            // Center vertically if shorter than A4
+            const yOffset = (pdfHeight - imgHeight) / 2;
+            pdf.addImage(imgData, 'PNG', 0, yOffset, imgWidth, imgHeight);
+        }
         
         // Generate filename with date
         const date = document.getElementById('form-date').value || 'permission';

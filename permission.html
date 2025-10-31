@@ -9,10 +9,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
-    <div class="container">
+    <div class="container" id="pdf-content">
         <!-- Header with back button and date -->
         <div class="header">
-            <button class="back-btn" onclick="window.location.href='index.html'">
+            <button class="back-btn no-print" onclick="window.location.href='index.html'">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                     <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                 </svg>
@@ -56,75 +56,64 @@
             </div>
         </div>
 
-        <!-- Permission Type Section -->
+        <!-- Permission Type Section - Matching the image exactly -->
         <div class="section-header">نوع الاستئذان</div>
-        <div class="permission-type">
-            <div class="checkbox-item">
-                <input type="checkbox" id="permission-leave" name="permission-type">
-                <label for="permission-leave">استئذان للخروج والانصراف</label>
-            </div>
-            
-            <div class="checkbox-item">
-                <input type="checkbox" id="permission-work" name="permission-type">
-                <label for="permission-work">مهمة عمل</label>
-            </div>
-            
-            <!-- Sub-options for work mission -->
-            <div class="sub-options" id="work-options">
-                <div class="checkbox-item sub-item">
-                    <input type="checkbox" id="work-field">
-                    <label for="work-field">يوم ميداني</label>
-                </div>
-                <div class="checkbox-item sub-item">
-                    <input type="checkbox" id="work-hours">
-                    <label for="work-hours">ساعات محددة</label>
-                </div>
-                <div class="checkbox-item sub-item">
-                    <input type="checkbox" id="work-day">
-                    <label for="work-day">نوع اليومية</label>
-                </div>
-            </div>
-            
-            <div class="checkbox-item">
-                <input type="checkbox" id="permission-return" name="permission-type">
-                <label for="permission-return">الخروج والعودة</label>
-            </div>
-            
-            <!-- Time range for return permission -->
-            <div class="time-range" id="return-time">
-                <div class="time-field">
-                    <label>من الساعة</label>
-                    <input type="time" id="time-from">
-                </div>
-                <div class="time-field">
-                    <label>إلى الساعة</label>
-                    <input type="time" id="time-to">
+        <div class="permission-type-table">
+            <!-- استئذان -->
+            <div class="permission-row">
+                <div class="permission-label">استئذان</div>
+                <div class="permission-options">
+                    <div class="option-item">
+                        <input type="checkbox" id="morning-attendance">
+                        <label for="morning-attendance">الحضور مساءً</label>
+                        <input type="time" class="time-input">
+                    </div>
+                    <div class="option-item">
+                        <input type="checkbox" id="early-leave">
+                        <label for="early-leave">الانصراف مبكراً</label>
+                        <input type="time" class="time-input">
+                    </div>
+                    <div class="option-item full-width">
+                        <input type="checkbox" id="leave-return">
+                        <label for="leave-return">الخروج والعودة</label>
+                        <span>من الساعة</span>
+                        <input type="time" class="time-input">
+                        <span>إلى الساعة</span>
+                        <input type="time" class="time-input">
+                    </div>
                 </div>
             </div>
             
-            <div class="reason-field">
+            <!-- الغرض من الاستئذان -->
+            <div class="purpose-row">
                 <label>الغرض من الاستئذان</label>
-                <input type="text" placeholder="" id="permission-reason">
-            </div>
-        </div>
-
-        <!-- Permission Details Section -->
-        <div class="section-header">تفاصيل الاستئذان</div>
-        <div class="permission-details">
-            <div class="detail-field">
-                <label>السبب / الوصف</label>
-                <textarea id="description" rows="3" placeholder="مراجعة الدوائر الحكومية"></textarea>
+                <input type="text" class="purpose-input" id="permission-reason">
             </div>
             
-            <div class="time-row">
-                <div class="time-field">
-                    <label>وقت البداية</label>
-                    <input type="time" id="start-time">
+            <!-- مهمة عمل -->
+            <div class="permission-row">
+                <div class="permission-label">مهمة عمل</div>
+                <div class="permission-options">
+                    <div class="option-item">
+                        <input type="checkbox" id="field-day">
+                        <label for="field-day">يوم ميداني</label>
+                        <input type="time" class="time-input">
+                    </div>
+                    <div class="option-item">
+                        <input type="checkbox" id="specific-hours">
+                        <label for="specific-hours">ساعات محددة</label>
+                        <span>من الساعة</span>
+                        <input type="time" class="time-input">
+                        <span>إلى الساعة</span>
+                        <input type="time" class="time-input">
+                    </div>
                 </div>
-                <div class="time-field">
-                    <label>وقت النهاية</label>
-                    <input type="time" id="end-time">
-                </div>
+            </div>
+            
+            <!-- نوع اليومية -->
+            <div class="purpose-row">
+                <label>نوع اليومية</label>
+                <input type="text" class="purpose-input" id="daily-type">
             </div>
         </div>
 
@@ -140,7 +129,7 @@
                 <label>توقيع الرئيس</label>
                 <div class="signature-canvas-container">
                     <canvas id="supervisor-signature" width="500" height="150"></canvas>
-                    <button class="clear-btn" onclick="clearSignature()">مسح</button>
+                    <button class="clear-btn no-print" onclick="clearSignature()">مسح</button>
                 </div>
             </div>
             
@@ -151,7 +140,7 @@
         </div>
 
         <!-- Action Buttons -->
-        <div class="action-buttons">
+        <div class="action-buttons no-print">
             <button class="action-btn pdf-btn" onclick="generatePDF()">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                     <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="2"/>
