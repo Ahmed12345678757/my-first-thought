@@ -124,6 +124,8 @@ body {
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 14px;
+    text-align: right;
+    direction: rtl;
 }
 
 /* Permission Type Table - Matching the image */
@@ -244,6 +246,8 @@ body {
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 14px;
+    text-align: right;
+    direction: rtl;
 }
 
 .signature-row {
@@ -441,6 +445,8 @@ body {
     .approval-field input {
         padding: 5px;
         font-size: 11px;
+        text-align: right;
+        direction: rtl;
     }
     
     .signature-box {
