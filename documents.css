@@ -40,43 +40,30 @@ body {
     background: #c82333;
 }
 
-.date-toggle {
+.date-container {
     display: flex;
     align-items: center;
-    gap: 10px;
 }
 
-.date-btn {
-    background: #f8f9fa;
+.date-input {
+    padding: 8px 15px;
     border: 2px solid #ddd;
-    border-radius: 6px;
-    padding: 6px 12px;
-    font-size: 12px;
-    cursor: pointer;
-    transition: all 0.3s;
-    color: #666;
-}
-
-.date-btn.active {
-    background: #dc3545;
-    border-color: #dc3545;
-    color: white;
-}
-
-.date-btn:hover {
-    background: #e9ecef;
-}
-
-.date-btn.active:hover {
-    background: #c82333;
-}
-
-.date-display {
+    border-radius: 8px;
     font-size: 14px;
-    color: #666;
-    min-width: 120px;
-    text-align: left;
-    font-weight: 500;
+    color: #333;
+    background: white;
+    cursor: pointer;
+    transition: border-color 0.3s;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.date-input:focus {
+    outline: none;
+    border-color: #dc3545;
+}
+
+.date-input:hover {
+    border-color: #dc3545;
 }
 
 /* Logo Section */
@@ -249,6 +236,28 @@ body {
 
 .document-button.no-document:hover {
     background: #5a6268;
+}
+
+/* Action Buttons */
+.action-btn {
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px 10px;
+    margin: 0 3px;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+.edit-btn:hover {
+    background: #ffc107;
+    transform: scale(1.1);
+}
+
+.delete-btn:hover {
+    background: #dc3545;
+    transform: scale(1.1);
 }
 
 /* Modal */

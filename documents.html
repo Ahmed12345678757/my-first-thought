@@ -15,10 +15,8 @@
             </svg>
         </button>
         
-        <div class="date-toggle">
-            <button class="date-btn active" id="gregorian-btn" onclick="toggleCalendar('gregorian')">ميلادي</button>
-            <button class="date-btn" id="hijri-btn" onclick="toggleCalendar('hijri')">هجري</button>
-            <div class="date-display" id="current-date"></div>
+        <div class="date-container">
+            <input type="date" class="date-input" id="date-input">
         </div>
     </header>
 
@@ -61,6 +59,7 @@
                     <th>رقم اللوحة</th>
                     <th>المركز</th>
                     <th>الوثيقة</th>
+                    <th>إجراءات</th>
                 </tr>
             </thead>
             <tbody id="table-body">

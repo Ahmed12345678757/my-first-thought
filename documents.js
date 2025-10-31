@@ -1,16 +1,13 @@
 // Vehicle data - Load from localStorage or start empty
 let vehicles = JSON.parse(localStorage.getItem('vehicles')) || [];
 
-// Current vehicle index for upload/view
+// Current vehicle index for upload/view/edit
 let currentVehicleIndex = -1;
-
-// Calendar type (gregorian or hijri)
-let currentCalendar = 'gregorian';
 
 // Initialize page
 document.addEventListener('DOMContentLoaded', function() {
-    // Display current date
-    displayCurrentDate();
+    // Set today's date
+    setTodayDate();
     
     // Generate table rows
     generateTableRows();
@@ -23,35 +20,11 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('camera-input').addEventListener('change', handleFileSelect);
 });
 
-// Toggle calendar type
-function toggleCalendar(type) {
-    currentCalendar = type;
-    
-    // Update button states
-    document.getElementById('gregorian-btn').classList.toggle('active', type === 'gregorian');
-    document.getElementById('hijri-btn').classList.toggle('active', type === 'hijri');
-    
-    // Update date display
-    displayCurrentDate();
-}
-
-// Display current date
-function displayCurrentDate() {
-    const dateElement = document.getElementById('current-date');
-    const now = new Date();
-    
-    if (currentCalendar === 'gregorian') {
-        const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        dateElement.textContent = now.toLocaleDateString('ar-SA', options);
-    } else {
-        // Hijri date (approximate conversion)
-        const hijriDate = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        }).format(now);
-        dateElement.textContent = hijriDate;
-    }
+// Set today's date in date input
+function setTodayDate() {
+    const dateInput = document.getElementById('date-input');
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.value = today;
 }
 
 // Generate table rows
@@ -61,7 +34,7 @@ function generateTableRows() {
     
     if (vehicles.length === 0) {
         const emptyRow = document.createElement('tr');
-        emptyRow.innerHTML = '<td colspan="5" style="padding: 40px; color: #999;">لا توجد سيارات. اضغط على "إضافة سيارة" لإضافة سيارة جديدة.</td>';
+        emptyRow.innerHTML = '<td colspan="6" style="padding: 40px; color: #999;">لا توجد سيارات. اضغط على "إضافة سيارة" لإضافة سيارة جديدة.</td>';
         tbody.appendChild(emptyRow);
         return;
     }
@@ -83,6 +56,10 @@ function generateTableRows() {
             <td>
                 <button class="${buttonClass}" onclick="${buttonAction}">${buttonText}</button>
             </td>
+            <td>
+                <button class="action-btn edit-btn" onclick="editVehicle(${index})" title="تعديل">✏️</button>
+                <button class="action-btn delete-btn" onclick="confirmDeleteVehicle(${index})" title="حذف">🗑️</button>
+            </td>
         `;
         
         tbody.appendChild(row);
@@ -91,12 +68,9 @@ function generateTableRows() {
 
 // Open add vehicle modal
 function openAddVehicleModal() {
+    currentVehicleIndex = -1; // Reset for new vehicle
     document.getElementById('add-vehicle-modal').style.display = 'block';
-}
-
-// Close add vehicle modal
-function closeAddVehicleModal() {
-    document.getElementById('add-vehicle-modal').style.display = 'none';
+    
     // Clear form
     document.getElementById('vehicle-type').value = '';
     document.getElementById('vehicle-model').value = '';
@@ -104,7 +78,28 @@ function closeAddVehicleModal() {
     document.getElementById('vehicle-center').value = '';
 }
 
-// Save new vehicle
+// Close add vehicle modal
+function closeAddVehicleModal() {
+    document.getElementById('add-vehicle-modal').style.display = 'none';
+    currentVehicleIndex = -1;
+}
+
+// Edit vehicle
+function editVehicle(index) {
+    currentVehicleIndex = index;
+    const vehicle = vehicles[index];
+    
+    // Fill form with current data
+    document.getElementById('vehicle-type').value = vehicle.type;
+    document.getElementById('vehicle-model').value = vehicle.model;
+    document.getElementById('vehicle-plate').value = vehicle.plate;
+    document.getElementById('vehicle-center').value = vehicle.center;
+    
+    // Open modal
+    document.getElementById('add-vehicle-modal').style.display = 'block';
+}
+
+// Save new or updated vehicle
 function saveNewVehicle() {
     const type = document.getElementById('vehicle-type').value.trim();
     const model = document.getElementById('vehicle-model').value.trim();
@@ -116,8 +111,13 @@ function saveNewVehicle() {
         return;
     }
     
-    // Add new vehicle
-    vehicles.push({ type, model, plate, center });
+    if (currentVehicleIndex === -1) {
+        // Add new vehicle
+        vehicles.push({ type, model, plate, center });
+    } else {
+        // Update existing vehicle
+        vehicles[currentVehicleIndex] = { type, model, plate, center };
+    }
     
     // Save to localStorage
     localStorage.setItem('vehicles', JSON.stringify(vehicles));
@@ -127,6 +127,37 @@ function saveNewVehicle() {
     
     // Close modal
     closeAddVehicleModal();
+}
+
+// Confirm delete vehicle
+function confirmDeleteVehicle(index) {
+    if (confirm('هل أنت متأكد من حذف هذه السيارة؟ سيتم حذف الوثيقة المرفقة أيضاً.')) {
+        deleteVehicle(index);
+    }
+}
+
+// Delete vehicle
+function deleteVehicle(index) {
+    // Remove vehicle from array
+    vehicles.splice(index, 1);
+    
+    // Remove document if exists
+    localStorage.removeItem(`vehicle-doc-${index}`);
+    
+    // Reindex documents
+    for (let i = index; i < vehicles.length; i++) {
+        const doc = localStorage.getItem(`vehicle-doc-${i + 1}`);
+        if (doc) {
+            localStorage.setItem(`vehicle-doc-${i}`, doc);
+            localStorage.removeItem(`vehicle-doc-${i + 1}`);
+        }
+    }
+    
+    // Save updated vehicles array
+    localStorage.setItem('vehicles', JSON.stringify(vehicles));
+    
+    // Regenerate table
+    generateTableRows();
 }
 
 // Search vehicle
