@@ -183,26 +183,42 @@ async function generatePDF() {
         // A4 dimensions
         const pdfWidth = 210;
         const pdfHeight = 297;
-        const margin = 15;
+        const margin = 10;
         
-        // Use 85% of page width for better readability (not too wide)
-        const contentWidth = (pdfWidth - (margin * 2)) * 0.85;
-        const contentHeight = (canvas.height * contentWidth) / canvas.width;
+        // Calculate dimensions to maintain aspect ratio
+        const availableWidth = pdfWidth - (margin * 2);
+        const imgWidth = availableWidth;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
         
-        // Center horizontally
-        const xOffset = (pdfWidth - contentWidth) / 2;
-        
-        // Check if fits in one page
-        if (contentHeight <= pdfHeight - (margin * 2)) {
-            // Fits in one page - center vertically
-            const yOffset = (pdfHeight - contentHeight) / 2;
-            pdf.addImage(imgData, 'JPEG', xOffset, yOffset, contentWidth, contentHeight, undefined, 'SLOW');
+        // If content fits in one page, add it
+        if (imgHeight <= pdfHeight - (margin * 2)) {
+            pdf.addImage(imgData, 'JPEG', margin, margin, imgWidth, imgHeight, undefined, 'FAST');
         } else {
-            // Too tall - scale down to fit
-            const scaledHeight = pdfHeight - (margin * 2);
-            const scaledWidth = (canvas.width * scaledHeight) / canvas.height;
-            const scaledXOffset = (pdfWidth - scaledWidth) / 2;
-            pdf.addImage(imgData, 'JPEG', scaledXOffset, margin, scaledWidth, scaledHeight, undefined, 'SLOW');
+            // Content is too tall - split across multiple pages
+            let yPosition = 0;
+            const pageHeight = pdfHeight - (margin * 2);
+            
+            while (yPosition < canvas.height) {
+                // Create canvas for this page section
+                const sectionCanvas = document.createElement('canvas');
+                const sectionHeight = Math.min(canvas.height - yPosition, (pageHeight * canvas.width) / imgWidth);
+                
+                sectionCanvas.width = canvas.width;
+                sectionCanvas.height = sectionHeight;
+                
+                const sectionCtx = sectionCanvas.getContext('2d');
+                sectionCtx.drawImage(canvas, 0, yPosition, canvas.width, sectionHeight, 0, 0, canvas.width, sectionHeight);
+                
+                const sectionData = sectionCanvas.toDataURL('image/jpeg', 0.85);
+                const sectionImgHeight = (sectionHeight * imgWidth) / canvas.width;
+                
+                if (yPosition > 0) {
+                    pdf.addPage();
+                }
+                
+                pdf.addImage(sectionData, 'JPEG', margin, margin, imgWidth, sectionImgHeight, undefined, 'FAST');
+                yPosition += sectionHeight;
+            }
         }
         
         // Generate filename with date
