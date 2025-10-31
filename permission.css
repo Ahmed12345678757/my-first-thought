@@ -13,10 +13,10 @@ body {
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 100%;
     margin: 0 auto;
     background: white;
-    padding: 40px;
+    padding: 30px;
 }
 
 /* Header */
@@ -128,13 +128,16 @@ body {
 
 /* Permission Type Table - Matching the image */
 .permission-type-table {
+    border: 2px solid #333;
+    border-radius: 8px;
+    overflow: hidden;
     margin-bottom: 20px;
 }
 
 .permission-row {
     display: grid;
     grid-template-columns: 150px 1fr;
-    margin-bottom: 10px;
+    border-bottom: 1px solid #333;
 }
 
 .permission-row:last-child {
@@ -155,16 +158,15 @@ body {
 .permission-options {
     padding: 15px;
     display: flex;
-    flex-direction: row;
-    gap: 20px;
-    align-items: center;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .option-item {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
 .option-item.full-width {
