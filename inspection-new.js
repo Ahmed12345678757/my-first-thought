@@ -304,36 +304,60 @@ function shareWhatsApp() {
 }
 
 // Generate PDF
-function generatePDF() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF('p', 'mm', 'a4');
-    
-    // Add Arabic font support
-    doc.setFont('helvetica');
-    doc.setFontSize(16);
-    
-    // Title
-    doc.text('Vehicle Inspection Report', 105, 20, { align: 'center' });
-    
-    // Date
-    doc.setFontSize(12);
-    const date = document.getElementById('inspection-date').value;
-    doc.text(`Date: ${date}`, 20, 35);
-    
-    // Vehicle Info
-    doc.setFontSize(14);
-    doc.text('Vehicle Information:', 20, 50);
-    doc.setFontSize(11);
-    doc.text(`Department: ${document.getElementById('department').value}`, 20, 60);
-    doc.text(`Odometer: ${document.getElementById('odometer').value}`, 20, 67);
-    doc.text(`Type: ${document.getElementById('vehicle-type').value}`, 20, 74);
-    doc.text(`Plate: ${document.getElementById('plate-number').value}`, 20, 81);
-    
-    // Inspection Results
-    doc.setFontSize(14);
-    doc.text('Inspection Results:', 20, 95);
-    doc.setFontSize(10);
-    
+async function generatePDF() {
+    try {
+        // Hide buttons temporarily
+        const buttonsContainer = document.querySelector('.action-buttons');
+        const originalDisplay = buttonsContainer.style.display;
+        buttonsContainer.style.display = 'none';
+        
+        // Capture the entire page
+        const canvas = await html2canvas(document.body, {
+            scale: 2,
+            useCORS: true,
+            allowTaint: true,
+            backgroundColor: '#ffffff'
+        });
+        
+        // Restore buttons
+        buttonsContainer.style.display = originalDisplay;
+        
+        // Create PDF
+        const { jsPDF } = window.jspdf;
+        const imgWidth = 210; // A4 width in mm
+        const pageHeight = 297; // A4 height in mm
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        let heightLeft = imgHeight;
+        
+        const doc = new jsPDF('p', 'mm', 'a4');
+        let position = 0;
+        
+        // Add image to PDF
+        const imgData = canvas.toDataURL('image/png');
+        doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+        
+        // Add new pages if content is longer than one page
+        while (heightLeft >= 0) {
+            position = heightLeft - imgHeight;
+            doc.addPage();
+            doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+        }
+        
+        // Save PDF
+        const date = document.getElementById('inspection-date').value || 'inspection';
+        doc.save(`vehicle-inspection-${date}.pdf`);
+        
+        alert('تم إنشاء ملف PDF بنجاح!');
+    } catch (error) {
+        console.error('Error generating PDF:', error);
+        alert('حدث خطأ أثناء إنشاء ملف PDF');
+    }
+}
+
+// Keep old function for reference
+function generatePDF_old() {
     const results = getInspectionResults();
     let yPos = 105;
     inspectionItems.forEach((item, index) => {
