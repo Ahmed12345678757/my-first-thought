@@ -343,12 +343,14 @@ body {
     body {
         background: white;
         padding: 0;
+        margin: 0;
     }
     
     .container {
         box-shadow: none;
-        padding: 20px;
+        padding: 15px;
         max-width: 100%;
+        margin: 0;
     }
     
     .no-print {
@@ -361,6 +363,89 @@ body {
     
     .action-buttons {
         display: none;
+    }
+    
+    /* Compress spacing for print */
+    .header {
+        margin-bottom: 10px;
+    }
+    
+    .header h1 {
+        font-size: 18px;
+        margin: 5px 0;
+    }
+    
+    .header p {
+        font-size: 11px;
+        margin: 3px 0;
+    }
+    
+    .logo {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .section-title {
+        padding: 8px;
+        font-size: 14px;
+        margin: 8px 0;
+    }
+    
+    .info-field {
+        margin-bottom: 8px;
+    }
+    
+    .info-field label {
+        font-size: 11px;
+        margin-bottom: 3px;
+    }
+    
+    .info-field input {
+        padding: 5px;
+        font-size: 11px;
+        text-align: right;
+    }
+    
+    .permission-type-table,
+    .work-task-table {
+        margin: 8px 0;
+    }
+    
+    .option-item {
+        margin-bottom: 6px;
+    }
+    
+    .option-item label {
+        font-size: 11px;
+    }
+    
+    .option-item input[type="time"],
+    .option-item input[type="date"] {
+        padding: 4px;
+        font-size: 10px;
+    }
+    
+    .approval-section {
+        margin-top: 10px;
+    }
+    
+    .approval-field {
+        margin-bottom: 8px;
+    }
+    
+    .approval-field label {
+        font-size: 11px;
+        margin-bottom: 3px;
+    }
+    
+    .approval-field input {
+        padding: 5px;
+        font-size: 11px;
+    }
+    
+    .signature-box {
+        height: 60px;
+        margin-top: 8px;
     }
 }
 
