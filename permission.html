@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>استئذان الموظفين - هيئة الهلال الأحمر السعودي</title>
+    <link rel="stylesheet" href="permission.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header with back button and date -->
+        <div class="header">
+            <button class="back-btn" onclick="window.location.href='index.html'">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+            
+            <div class="date-section">
+                <span>التاريخ:</span>
+                <input type="date" id="form-date" value="">
+            </div>
+        </div>
+
+        <!-- Logo Section -->
+        <div class="logo-section">
+            <img src="logo.png" alt="شعار الهلال الأحمر السعودي" class="logo">
+            <h2>محضر استئذان الموظفين</h2>
+            <p class="subtitle">استئذان (الخروج / والانصراف مهمة/عمل)</p>
+        </div>
+
+        <!-- Employee Information Section -->
+        <div class="section-header">معلومات الموظف</div>
+        <div class="employee-info">
+            <div class="info-row">
+                <div class="info-field">
+                    <label>اسم الموظف</label>
+                    <input type="text" placeholder="ناصر محسن الحاجي" id="employee-name">
+                </div>
+                <div class="info-field">
+                    <label>الرقم الوظيفي</label>
+                    <input type="text" placeholder="102649" id="employee-id">
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-field">
+                    <label>القسم / الإدارة</label>
+                    <input type="text" placeholder="الصيانة" id="department">
+                </div>
+                <div class="info-field">
+                    <label>المسمى الوظيفي</label>
+                    <input type="text" placeholder="سائق" id="job-title">
+                </div>
+            </div>
+        </div>
+
+        <!-- Permission Type Section -->
+        <div class="section-header">نوع الاستئذان</div>
+        <div class="permission-type">
+            <div class="checkbox-item">
+                <input type="checkbox" id="permission-leave" name="permission-type">
+                <label for="permission-leave">استئذان للخروج والانصراف</label>
+            </div>
+            
+            <div class="checkbox-item">
+                <input type="checkbox" id="permission-work" name="permission-type">
+                <label for="permission-work">مهمة عمل</label>
+            </div>
+            
+            <!-- Sub-options for work mission -->
+            <div class="sub-options" id="work-options">
+                <div class="checkbox-item sub-item">
+                    <input type="checkbox" id="work-field">
+                    <label for="work-field">يوم ميداني</label>
+                </div>
+                <div class="checkbox-item sub-item">
+                    <input type="checkbox" id="work-hours">
+                    <label for="work-hours">ساعات محددة</label>
+                </div>
+                <div class="checkbox-item sub-item">
+                    <input type="checkbox" id="work-day">
+                    <label for="work-day">نوع اليومية</label>
+                </div>
+            </div>
+            
+            <div class="checkbox-item">
+                <input type="checkbox" id="permission-return" name="permission-type">
+                <label for="permission-return">الخروج والعودة</label>
+            </div>
+            
+            <!-- Time range for return permission -->
+            <div class="time-range" id="return-time">
+                <div class="time-field">
+                    <label>من الساعة</label>
+                    <input type="time" id="time-from">
+                </div>
+                <div class="time-field">
+                    <label>إلى الساعة</label>
+                    <input type="time" id="time-to">
+                </div>
+            </div>
+            
+            <div class="reason-field">
+                <label>الغرض من الاستئذان</label>
+                <input type="text" placeholder="" id="permission-reason">
+            </div>
+        </div>
+
+        <!-- Permission Details Section -->
+        <div class="section-header">تفاصيل الاستئذان</div>
+        <div class="permission-details">
+            <div class="detail-field">
+                <label>السبب / الوصف</label>
+                <textarea id="description" rows="3" placeholder="مراجعة الدوائر الحكومية"></textarea>
+            </div>
+            
+            <div class="time-row">
+                <div class="time-field">
+                    <label>وقت البداية</label>
+                    <input type="time" id="start-time">
+                </div>
+                <div class="time-field">
+                    <label>وقت النهاية</label>
+                    <input type="time" id="end-time">
+                </div>
+            </div>
+        </div>
+
+        <!-- Approval Section -->
+        <div class="section-header">الموافقة</div>
+        <div class="approval-section">
+            <div class="approval-field">
+                <label>اسم الرئيس المباشر</label>
+                <input type="text" placeholder="ادخل اسم المشرف" id="supervisor-name">
+            </div>
+            
+            <div class="signature-row">
+                <label>توقيع الرئيس</label>
+                <div class="signature-canvas-container">
+                    <canvas id="supervisor-signature" width="500" height="150"></canvas>
+                    <button class="clear-btn" onclick="clearSignature()">مسح</button>
+                </div>
+            </div>
+            
+            <div class="approval-field">
+                <label>تاريخ الموافقة</label>
+                <input type="date" id="approval-date">
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="action-btn pdf-btn" onclick="generatePDF()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="2"/>
+                    <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                <span>PDF</span>
+            </button>
+            
+            <button class="action-btn save-btn" onclick="saveData()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" stroke="currentColor" stroke-width="2"/>
+                    <path d="M17 21v-8H7v8M7 3v5h8" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                <span>حفظ المتغيرات</span>
+            </button>
+        </div>
+    </div>
+
+    <script src="permission.js"></script>
+</body>
+</html>
