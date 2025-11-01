@@ -250,6 +250,17 @@ body {
     direction: rtl;
 }
 
+/* Make approval date visible and match width */
+.approval-field input[type="date"] {
+    color: #000 !important;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.approval-field input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 1;
+}
+
 .signature-row {
     margin-bottom: 15px;
 }
