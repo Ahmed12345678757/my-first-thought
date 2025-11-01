@@ -361,17 +361,25 @@ function saveData() {
         odometer: document.getElementById('odometer').value,
         vehicleType: document.getElementById('vehicle-type').value,
         plateNumber: document.getElementById('plate-number').value,
-        maintenance: document.getElementById('maintenance').value,
         notes: document.getElementById('notes').value,
         submitterName: document.getElementById('submitter-name').value,
         receiverName: document.getElementById('receiver-name').value,
         inspectionResults: getInspectionResults(),
         submitterSignature: document.getElementById('submitter-signature').toDataURL(),
-        receiverSignature: document.getElementById('receiver-signature').toDataURL()
+        receiverSignature: document.getElementById('receiver-signature').toDataURL(),
+        savedAt: new Date().toISOString()
     };
     
+    // Generate unique receipt number (timestamp-based)
+    const receiptNumber = Date.now();
+    
+    // Save with unique key for search functionality
+    localStorage.setItem(`inspection_${receiptNumber}`, JSON.stringify(data));
+    
+    // Also save as current data for backward compatibility
     localStorage.setItem('vehicleInspectionData', JSON.stringify(data));
-    alert('تم حفظ البيانات بنجاح!');
+    
+    alert(`تم حفظ البيانات بنجاح!\nرقم الاستلام: ${receiptNumber}`);
 }
 
 // Load saved data
@@ -386,7 +394,6 @@ function loadSavedData() {
     document.getElementById('odometer').value = data.odometer || '';
     document.getElementById('vehicle-type').value = data.vehicleType || '';
     document.getElementById('plate-number').value = data.plateNumber || '';
-    document.getElementById('maintenance').value = data.maintenance || '';
     document.getElementById('notes').value = data.notes || '';
     document.getElementById('submitter-name').value = data.submitterName || '';
     document.getElementById('receiver-name').value = data.receiverName || '';
@@ -612,5 +619,183 @@ function createNew() {
         clearSignature('receiver');
         
         alert('تم إنشاء فحص جديد!');
+    }
+}
+
+// Modal Functions
+function openSearchModal() {
+    document.getElementById('search-modal').style.display = 'block';
+    // Set default dates (last 30 days)
+    const today = new Date();
+    const thirtyDaysAgo = new Date(today.getTime() - (30 * 24 * 60 * 60 * 1000));
+    document.getElementById('search-to-date').value = today.toISOString().split('T')[0];
+    document.getElementById('search-from-date').value = thirtyDaysAgo.toISOString().split('T')[0];
+}
+
+function closeSearchModal() {
+    document.getElementById('search-modal').style.display = 'none';
+    document.getElementById('search-results').innerHTML = '';
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    const modal = document.getElementById('search-modal');
+    if (event.target == modal) {
+        closeSearchModal();
+    }
+}
+
+// Search Records Function
+function searchRecords() {
+    const fromDate = document.getElementById('search-from-date').value;
+    const toDate = document.getElementById('search-to-date').value;
+    
+    if (!fromDate || !toDate) {
+        alert('الرجاء تحديد الفترة الزمنية للبحث');
+        return;
+    }
+    
+    // Convert dates to timestamps for comparison
+    const fromTimestamp = new Date(fromDate).getTime();
+    const toTimestamp = new Date(toDate).getTime() + (24 * 60 * 60 * 1000); // Add 1 day to include end date
+    
+    // Get all inspection records from localStorage
+    const allRecords = [];
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key.startsWith('inspection_')) {
+            try {
+                const record = JSON.parse(localStorage.getItem(key));
+                const recordTimestamp = parseInt(key.replace('inspection_', ''));
+                
+                // Check if record is within date range
+                if (recordTimestamp >= fromTimestamp && recordTimestamp <= toTimestamp) {
+                    allRecords.push({
+                        key: key,
+                        timestamp: recordTimestamp,
+                        data: record
+                    });
+                }
+            } catch (e) {
+                console.error('Error parsing record:', e);
+            }
+        }
+    }
+    
+    // Sort by timestamp (newest first)
+    allRecords.sort((a, b) => b.timestamp - a.timestamp);
+    
+    // Display results
+    displaySearchResults(allRecords);
+}
+
+function displaySearchResults(records) {
+    const resultsContainer = document.getElementById('search-results');
+    
+    if (records.length === 0) {
+        resultsContainer.innerHTML = `
+            <div class="no-results">
+                <svg width="80" height="80" viewBox="0 0 24 24" fill="none">
+                    <circle cx="11" cy="11" r="8" stroke="#ccc" stroke-width="2"/>
+                    <path d="M21 21l-4.35-4.35" stroke="#ccc" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <h3>لا توجد نتائج</h3>
+                <p>لم يتم العثور على سجلات في الفترة المحددة</p>
+            </div>
+        `;
+        return;
+    }
+    
+    let html = `
+        <div class="results-summary">
+            تم العثور على ${records.length} سجل في الفترة المحددة
+        </div>
+        <table class="results-table">
+            <thead>
+                <tr>
+                    <th>رقم الاستلام</th>
+                    <th>التاريخ</th>
+                    <th>اسم المستلم</th>
+                    <th>رقم اللوحة</th>
+                    <th>نوع السيارة</th>
+                    <th>الإجراء</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+    
+    records.forEach(record => {
+        const date = new Date(record.timestamp);
+        const formattedDate = date.toLocaleDateString('ar-SA');
+        const receiptNumber = record.key.replace('inspection_', '');
+        const receiverName = record.data.receiverName || 'غير محدد';
+        const plateNumber = record.data.plateNumber || 'غير محدد';
+        const vehicleType = record.data.vehicleType || 'غير محدد';
+        
+        html += `
+            <tr>
+                <td>${receiptNumber}</td>
+                <td>${formattedDate}</td>
+                <td>${receiverName}</td>
+                <td>${plateNumber}</td>
+                <td>${vehicleType}</td>
+                <td>
+                    <button class="view-btn" onclick="viewRecord('${record.key}')">عرض</button>
+                </td>
+            </tr>
+        `;
+    });
+    
+    html += `
+            </tbody>
+        </table>
+    `;
+    
+    resultsContainer.innerHTML = html;
+}
+
+function viewRecord(key) {
+    try {
+        const record = JSON.parse(localStorage.getItem(key));
+        if (!record) {
+            alert('لم يتم العثور على السجل');
+            return;
+        }
+        
+        // Load the record data into the form
+        if (confirm('هل تريد عرض هذا السجل؟ سيتم استبدال البيانات الحالية.')) {
+            // Close modal first
+            closeSearchModal();
+            
+            // Load data
+            document.getElementById('inspection-date').value = record.date || '';
+            document.getElementById('department').value = record.department || '';
+            document.getElementById('odometer').value = record.odometer || '';
+            document.getElementById('vehicle-type').value = record.vehicleType || '';
+            document.getElementById('plate-number').value = record.plateNumber || '';
+            document.getElementById('maintenance').value = record.maintenance || '';
+            document.getElementById('notes').value = record.notes || '';
+            document.getElementById('submitter-name').value = record.submitterName || '';
+            document.getElementById('receiver-name').value = record.receiverName || '';
+            
+            // Load inspection status
+            if (record.inspectionStatus) {
+                Object.keys(record.inspectionStatus).forEach(item => {
+                    const indicator = document.querySelector(`[data-item="${item}"]`);
+                    if (indicator) {
+                        indicator.classList.remove('healthy', 'unhealthy');
+                        indicator.classList.add(record.inspectionStatus[item]);
+                    }
+                });
+            }
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            alert('تم تحميل السجل بنجاح!');
+        }
+    } catch (e) {
+        console.error('Error loading record:', e);
+        alert('حدث خطأ أثناء تحميل السجل');
     }
 }
