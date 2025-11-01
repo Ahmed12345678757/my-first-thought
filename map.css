@@ -184,9 +184,10 @@ td select option {
 /* الأزرار السفلية */
 .bottom-buttons {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     gap: 20px;
     margin-top: 20px;
+    padding: 0 20px;
 }
 
 .save-btn, .pdf-btn {
@@ -198,8 +199,7 @@ td select option {
     cursor: pointer;
     transition: all 0.3s;
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    flex: 1;
-    max-width: 300px;
+    width: 200px;
 }
 
 .save-btn {
