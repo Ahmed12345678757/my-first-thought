@@ -85,6 +85,7 @@ let lastCarX = 0;
 let lastCarY = 0;
 let currentTool = 'pen';
 let currentColor = '#ff0000';
+let carImage = null;
 
 function initializeCarDiagramDrawing() {
     const canvas = document.getElementById('car-diagram-canvas');
@@ -96,16 +97,18 @@ function initializeCarDiagramDrawing() {
     canvas.height = 300;
     
     // Load car diagram image
-    const carImage = new Image();
+    carImage = new Image();
     carImage.src = 'car-diagram.png';
     
     carImage.onload = function() {
-        // Set canvas size to match image
-        canvas.width = carImage.width;
-        canvas.height = carImage.height;
+        // Set canvas size to reasonable dimensions (max 500px width)
+        const maxWidth = 500;
+        const scale = Math.min(1, maxWidth / carImage.width);
+        canvas.width = carImage.width * scale;
+        canvas.height = carImage.height * scale;
         
         // Draw the car image on canvas
-        carDiagramCtx.drawImage(carImage, 0, 0);
+        carDiagramCtx.drawImage(carImage, 0, 0, canvas.width, canvas.height);
     };
     
     carImage.onerror = function() {
@@ -163,9 +166,33 @@ function drawOnCar(e) {
     if (currentTool === 'pen') {
         carDiagramCtx.strokeStyle = currentColor;
         carDiagramCtx.lineWidth = 4;
+        carDiagramCtx.globalCompositeOperation = 'source-over';
     } else if (currentTool === 'eraser') {
+        // For eraser, we need to redraw the car image first, then erase only the drawing
+        // Store current canvas content
+        const imageData = carDiagramCtx.getImageData(0, 0, carDiagramCanvas.width, carDiagramCanvas.height);
+        
+        // Clear the eraser area
+        carDiagramCtx.save();
         carDiagramCtx.globalCompositeOperation = 'destination-out';
         carDiagramCtx.lineWidth = 20;
+        carDiagramCtx.lineCap = 'round';
+        carDiagramCtx.lineJoin = 'round';
+        carDiagramCtx.beginPath();
+        carDiagramCtx.moveTo(lastCarX, lastCarY);
+        carDiagramCtx.lineTo(e.offsetX, e.offsetY);
+        carDiagramCtx.stroke();
+        carDiagramCtx.restore();
+        
+        // Redraw the car image underneath
+        carDiagramCtx.globalCompositeOperation = 'destination-over';
+        if (carImage.complete) {
+            carDiagramCtx.drawImage(carImage, 0, 0, carDiagramCanvas.width, carDiagramCanvas.height);
+        }
+        carDiagramCtx.globalCompositeOperation = 'source-over';
+        
+        [lastCarX, lastCarY] = [e.offsetX, e.offsetY];
+        return;
     }
     
     carDiagramCtx.lineCap = 'round';
@@ -175,9 +202,6 @@ function drawOnCar(e) {
     carDiagramCtx.moveTo(lastCarX, lastCarY);
     carDiagramCtx.lineTo(e.offsetX, e.offsetY);
     carDiagramCtx.stroke();
-    
-    // Reset composite operation
-    carDiagramCtx.globalCompositeOperation = 'source-over';
     
     [lastCarX, lastCarY] = [e.offsetX, e.offsetY];
 }
@@ -228,13 +252,11 @@ function handleCarTouchMove(e) {
 }
 
 function clearCarDrawing() {
-    // Reload the car image
-    const carImage = new Image();
-    carImage.src = 'car-diagram.png';
-    carImage.onload = function() {
-        carDiagramCtx.clearRect(0, 0, carDiagramCanvas.width, carDiagramCanvas.height);
-        carDiagramCtx.drawImage(carImage, 0, 0);
-    };
+    // Clear canvas and redraw the car image
+    carDiagramCtx.clearRect(0, 0, carDiagramCanvas.width, carDiagramCanvas.height);
+    if (carImage && carImage.complete) {
+        carDiagramCtx.drawImage(carImage, 0, 0, carDiagramCanvas.width, carDiagramCanvas.height);
+    }
 }
 
 // Signature functionality
