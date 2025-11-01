@@ -59,13 +59,19 @@ function toggleIndicator(element) {
     const type = element.getAttribute('data-type');
     const index = element.getAttribute('data-index');
     
+    // Check if this indicator is already active
+    const isActive = element.classList.contains(type);
+    
     // Remove active class from both indicators in this row
     const row = element.closest('tr');
     const indicators = row.querySelectorAll('.indicator');
     indicators.forEach(ind => ind.classList.remove('healthy', 'unhealthy'));
     
-    // Add active class to clicked indicator
-    element.classList.add(type);
+    // If it wasn't active, add the class (toggle on)
+    // If it was active, leave it off (toggle off)
+    if (!isActive) {
+        element.classList.add(type);
+    }
 }
 
 // Signature functionality
