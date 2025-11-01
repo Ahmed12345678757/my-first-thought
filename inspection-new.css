@@ -28,7 +28,6 @@ body {
     margin-bottom: 20px;
     padding-bottom: 15px;
     border-bottom: 2px solid #e0e0e0;
-    flex-direction: row-reverse;
 }
 
 .back-btn {
@@ -172,13 +171,13 @@ body {
 }
 
 .indicator.healthy {
-    background: #27ae60;
-    border-color: #229954;
+    background: #1a5490;
+    border-color: #0d3a6b;
 }
 
 .indicator.unhealthy {
-    background: #e74c3c;
-    border-color: #c0392b;
+    background: #8b0000;
+    border-color: #5c0000;
 }
 
 /* Car Diagram */
@@ -186,14 +185,73 @@ body {
     text-align: center;
     margin: 20px 0;
     padding: 20px;
-    background: white;
+    background: #f9f9f9;
     border-radius: 10px;
+    border: 2px solid #e0e0e0;
 }
 
-.car-diagram {
-    max-width: 100%;
-    height: auto;
+.drawing-tools {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.tool-btn {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #ddd;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.tool-btn:hover {
+    transform: scale(1.1);
+    border-color: #333;
+}
+
+.tool-btn.active {
+    border-color: #000;
+    border-width: 4px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+.eraser-btn {
+    background: white !important;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.clear-drawing-btn {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
     border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s;
+}
+
+.clear-drawing-btn:hover {
+    background: #c0392b;
+}
+
+.car-diagram-canvas {
+    max-width: 500px;
+    width: 100%;
+    height: auto;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    background: white;
+    cursor: crosshair;
+    display: block;
+    margin: 0 auto;
 }
 
 /* Notes Section */
