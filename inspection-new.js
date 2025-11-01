@@ -13,8 +13,7 @@ const inspectionItems = [
     'ناقل الحركة',
     'أجهزة الاتصال',
     'الإطارات الاحتياطية',
-    'العفشات الطبية',
-    'الوايرليس للسجل'
+    'العفشات الطبية'
 ];
 
 // Initialize the page
@@ -42,13 +41,13 @@ function generateInspectionTable() {
     inspectionItems.forEach((item, index) => {
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td>
-                <span class="indicator" data-type="unhealthy" data-index="${index}" onclick="toggleIndicator(this)"></span>
-            </td>
+            <td>${item}</td>
             <td>
                 <span class="indicator" data-type="healthy" data-index="${index}" onclick="toggleIndicator(this)"></span>
             </td>
-            <td>${item}</td>
+            <td>
+                <span class="indicator" data-type="unhealthy" data-index="${index}" onclick="toggleIndicator(this)"></span>
+            </td>
         `;
         tbody.appendChild(row);
     });
