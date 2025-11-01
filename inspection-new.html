@@ -70,7 +70,10 @@
                 <button class="tool-btn eraser-btn" data-tool="eraser" title="ممحاة">🧹</button>
                 <button class="clear-drawing-btn" onclick="clearCarDrawing()" title="مسح الكل">🗑️ مسح الرسم</button>
             </div>
-            <canvas id="car-diagram-canvas" class="car-diagram-canvas"></canvas>
+            <div class="canvas-wrapper">
+                <canvas id="car-diagram-bg-canvas" class="car-diagram-canvas"></canvas>
+                <canvas id="car-diagram-canvas" class="car-diagram-canvas"></canvas>
+            </div>
         </div>
 
         <!-- Inspection Table -->
