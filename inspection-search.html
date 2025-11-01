@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>البحث في سجلات الفحص - هيئة الهلال الأحمر السعودي</title>
+    <link rel="stylesheet" href="inspection-search.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <button class="back-btn" onclick="window.location.href='index.html'">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+            
+            <a href="index.html" class="home-link">العودة للصفحة الرئيسية</a>
+        </div>
+
+        <!-- Logo Section -->
+        <div class="logo-section">
+            <img src="logo.png" alt="شعار الهلال الأحمر السعودي" class="logo">
+            <h2>البحث في سجلات فحص السيارات</h2>
+        </div>
+
+        <!-- Search Section -->
+        <div class="search-section">
+            <div class="section-header">🔍 البحث حسب الفترة الزمنية</div>
+            
+            <div class="date-range">
+                <div class="date-field">
+                    <label>من تاريخ:</label>
+                    <input type="date" id="from-date">
+                </div>
+                
+                <div class="date-field">
+                    <label>إلى تاريخ:</label>
+                    <input type="date" id="to-date">
+                </div>
+            </div>
+            
+            <button class="search-btn" onclick="searchRecords()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+                    <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <span>بحث</span>
+            </button>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-section" id="results-section" style="display: none;">
+            <div class="section-header">📋 نتائج البحث</div>
+            
+            <div class="results-summary" id="results-summary"></div>
+            
+            <div class="results-table-container">
+                <table class="results-table" id="results-table">
+                    <thead>
+                        <tr>
+                            <th>رقم الاستلام</th>
+                            <th>التاريخ</th>
+                            <th>المستلم</th>
+                            <th>رقم اللوحة</th>
+                            <th>النوع</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="results-tbody">
+                        <!-- Results will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- No Results Message -->
+        <div class="no-results" id="no-results" style="display: none;">
+            <svg width="80" height="80" viewBox="0 0 24 24" fill="none">
+                <circle cx="11" cy="11" r="8" stroke="#ccc" stroke-width="2"/>
+                <path d="M21 21l-4.35-4.35" stroke="#ccc" stroke-width="2" stroke-linecap="round"/>
+                <line x1="8" y1="11" x2="14" y2="11" stroke="#ccc" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <h3>لا توجد نتائج</h3>
+            <p>لم يتم العثور على سجلات فحص في الفترة المحددة</p>
+        </div>
+    </div>
+
+    <script src="inspection-search.js"></script>
+</body>
+</html>
