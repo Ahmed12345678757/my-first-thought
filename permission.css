@@ -250,6 +250,16 @@ body {
     direction: rtl;
 }
 
+/* Make date input visible */
+.approval-field input[type="date"] {
+    color: #000;
+}
+
+.approval-field input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 1;
+    cursor: pointer;
+}
+
 .signature-row {
     margin-bottom: 15px;
 }
