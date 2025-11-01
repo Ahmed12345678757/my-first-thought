@@ -555,34 +555,34 @@ body {
 .date-range {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    margin-bottom: 20px;
+    gap: 12px;
+    margin-bottom: 18px;
 }
 
 .date-field {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 6px;
 }
 
 .date-field label {
-    font-weight: bold;
-    color: #555;
-    font-size: 14px;
+    font-weight: 600;
+    color: #666;
+    font-size: 13px;
     text-align: right;
 }
 
 .date-field input {
     width: 100%;
-    padding: 8px 12px;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    font-size: 14px;
+    padding: 6px 10px;
+    border: 1.5px solid #ddd;
+    border-radius: 6px;
+    font-size: 13px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     text-align: center;
     direction: ltr;
     transition: all 0.3s;
-    height: 40px;
+    height: 36px;
     background: #f8f9fa;
 }
 
