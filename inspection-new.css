@@ -445,25 +445,21 @@ body {
 
 /* Search Button */
 .search-btn {
-    background: linear-gradient(135deg, #9B59B6 0%, #8E44AD 100%);
-    color: white;
+    background: transparent;
+    color: #9B59B6;
     border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
+    padding: 8px;
+    border-radius: 50%;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 16px;
-    font-weight: bold;
+    justify-content: center;
     transition: all 0.3s;
-    box-shadow: 0 2px 8px rgba(155, 89, 182, 0.3);
 }
 
 .search-btn:hover {
-    background: linear-gradient(135deg, #8E44AD 0%, #7D3C98 100%);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(155, 89, 182, 0.4);
+    background: rgba(155, 89, 182, 0.1);
+    transform: scale(1.1);
 }
 
 .search-btn:active {
@@ -574,16 +570,18 @@ body {
 
 .date-field input {
     width: 100%;
-    padding: 6px 10px;
+    max-width: 100%;
+    padding: 5px 8px;
     border: 1.5px solid #ddd;
     border-radius: 6px;
-    font-size: 13px;
+    font-size: 12px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     text-align: center;
     direction: ltr;
     transition: all 0.3s;
-    height: 36px;
+    height: 32px;
     background: #f8f9fa;
+    box-sizing: border-box;
 }
 
 .date-field input:focus {
