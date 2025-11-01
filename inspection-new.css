@@ -437,8 +437,14 @@ body {
     }
 }
 
-/* Search Button in Header */
-.header .search-btn {
+/* Search Container */
+.search-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Search Button */
+.search-btn {
     background: linear-gradient(135deg, #9B59B6 0%, #8E44AD 100%);
     color: white;
     border: none;
@@ -454,13 +460,13 @@ body {
     box-shadow: 0 2px 8px rgba(155, 89, 182, 0.3);
 }
 
-.header .search-btn:hover {
+.search-btn:hover {
     background: linear-gradient(135deg, #8E44AD 0%, #7D3C98 100%);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(155, 89, 182, 0.4);
 }
 
-.header .search-btn:active {
+.search-btn:active {
     transform: translateY(0);
 }
 
@@ -489,7 +495,7 @@ body {
     padding: 0;
     border-radius: 15px;
     width: 90%;
-    max-width: 800px;
+    max-width: 500px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
     animation: slideDown 0.3s;
 }
@@ -567,13 +573,14 @@ body {
 
 .date-field input {
     width: 100%;
-    padding: 12px;
+    padding: 8px 10px;
     border: 2px solid #ddd;
     border-radius: 8px;
-    font-size: 16px;
+    font-size: 14px;
     text-align: right;
     direction: rtl;
     transition: all 0.3s;
+    height: 38px;
 }
 
 .date-field input:focus {
