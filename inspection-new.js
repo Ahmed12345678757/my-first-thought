@@ -26,6 +26,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Generate inspection table rows
     generateInspectionTable();
     
+    // Initialize car diagram drawing canvas
+    initializeCarDiagramDrawing();
+    
     // Initialize signature canvases
     initializeSignature('submitter-signature');
     initializeSignature('receiver-signature');
@@ -72,6 +75,166 @@ function toggleIndicator(element) {
     if (!isActive) {
         element.classList.add(type);
     }
+}
+
+// Car Diagram Drawing functionality
+let carDiagramCanvas = null;
+let carDiagramCtx = null;
+let isDrawingOnCar = false;
+let lastCarX = 0;
+let lastCarY = 0;
+let currentTool = 'pen';
+let currentColor = '#ff0000';
+
+function initializeCarDiagramDrawing() {
+    const canvas = document.getElementById('car-diagram-canvas');
+    carDiagramCanvas = canvas;
+    carDiagramCtx = canvas.getContext('2d');
+    
+    // Set default canvas size
+    canvas.width = 500;
+    canvas.height = 300;
+    
+    // Load car diagram image
+    const carImage = new Image();
+    carImage.src = 'car-diagram.png';
+    
+    carImage.onload = function() {
+        // Set canvas size to match image
+        canvas.width = carImage.width;
+        canvas.height = carImage.height;
+        
+        // Draw the car image on canvas
+        carDiagramCtx.drawImage(carImage, 0, 0);
+    };
+    
+    carImage.onerror = function() {
+        console.error('Failed to load car diagram image');
+        // Draw a placeholder rectangle
+        carDiagramCtx.fillStyle = '#f0f0f0';
+        carDiagramCtx.fillRect(0, 0, canvas.width, canvas.height);
+        carDiagramCtx.strokeStyle = '#ccc';
+        carDiagramCtx.strokeRect(0, 0, canvas.width, canvas.height);
+        carDiagramCtx.fillStyle = '#999';
+        carDiagramCtx.font = '16px Arial';
+        carDiagramCtx.textAlign = 'center';
+        carDiagramCtx.fillText('مجسم السيارة', canvas.width / 2, canvas.height / 2);
+    };
+    
+    // Setup drawing tools
+    const toolButtons = document.querySelectorAll('.tool-btn');
+    toolButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Remove active class from all buttons
+            toolButtons.forEach(b => b.classList.remove('active'));
+            // Add active class to clicked button
+            this.classList.add('active');
+            
+            currentTool = this.getAttribute('data-tool');
+            if (currentTool === 'pen') {
+                currentColor = this.getAttribute('data-color');
+            }
+        });
+    });
+    
+    // Set default tool (red pen)
+    toolButtons[0].classList.add('active');
+    
+    // Mouse events
+    canvas.addEventListener('mousedown', startDrawingOnCar);
+    canvas.addEventListener('mousemove', drawOnCar);
+    canvas.addEventListener('mouseup', stopDrawingOnCar);
+    canvas.addEventListener('mouseout', stopDrawingOnCar);
+    
+    // Touch events for mobile
+    canvas.addEventListener('touchstart', handleCarTouchStart);
+    canvas.addEventListener('touchmove', handleCarTouchMove);
+    canvas.addEventListener('touchend', stopDrawingOnCar);
+}
+
+function startDrawingOnCar(e) {
+    isDrawingOnCar = true;
+    [lastCarX, lastCarY] = [e.offsetX, e.offsetY];
+}
+
+function drawOnCar(e) {
+    if (!isDrawingOnCar) return;
+    
+    if (currentTool === 'pen') {
+        carDiagramCtx.strokeStyle = currentColor;
+        carDiagramCtx.lineWidth = 4;
+    } else if (currentTool === 'eraser') {
+        carDiagramCtx.globalCompositeOperation = 'destination-out';
+        carDiagramCtx.lineWidth = 20;
+    }
+    
+    carDiagramCtx.lineCap = 'round';
+    carDiagramCtx.lineJoin = 'round';
+    
+    carDiagramCtx.beginPath();
+    carDiagramCtx.moveTo(lastCarX, lastCarY);
+    carDiagramCtx.lineTo(e.offsetX, e.offsetY);
+    carDiagramCtx.stroke();
+    
+    // Reset composite operation
+    carDiagramCtx.globalCompositeOperation = 'source-over';
+    
+    [lastCarX, lastCarY] = [e.offsetX, e.offsetY];
+}
+
+function stopDrawingOnCar() {
+    isDrawingOnCar = false;
+}
+
+function handleCarTouchStart(e) {
+    e.preventDefault();
+    const touch = e.touches[0];
+    const rect = carDiagramCanvas.getBoundingClientRect();
+    isDrawingOnCar = true;
+    lastCarX = touch.clientX - rect.left;
+    lastCarY = touch.clientY - rect.top;
+}
+
+function handleCarTouchMove(e) {
+    if (!isDrawingOnCar) return;
+    e.preventDefault();
+    
+    const touch = e.touches[0];
+    const rect = carDiagramCanvas.getBoundingClientRect();
+    const x = touch.clientX - rect.left;
+    const y = touch.clientY - rect.top;
+    
+    if (currentTool === 'pen') {
+        carDiagramCtx.strokeStyle = currentColor;
+        carDiagramCtx.lineWidth = 4;
+    } else if (currentTool === 'eraser') {
+        carDiagramCtx.globalCompositeOperation = 'destination-out';
+        carDiagramCtx.lineWidth = 20;
+    }
+    
+    carDiagramCtx.lineCap = 'round';
+    carDiagramCtx.lineJoin = 'round';
+    
+    carDiagramCtx.beginPath();
+    carDiagramCtx.moveTo(lastCarX, lastCarY);
+    carDiagramCtx.lineTo(x, y);
+    carDiagramCtx.stroke();
+    
+    // Reset composite operation
+    carDiagramCtx.globalCompositeOperation = 'source-over';
+    
+    lastCarX = x;
+    lastCarY = y;
+}
+
+function clearCarDrawing() {
+    // Reload the car image
+    const carImage = new Image();
+    carImage.src = 'car-diagram.png';
+    carImage.onload = function() {
+        carDiagramCtx.clearRect(0, 0, carDiagramCanvas.width, carDiagramCanvas.height);
+        carDiagramCtx.drawImage(carImage, 0, 0);
+    };
 }
 
 // Signature functionality
