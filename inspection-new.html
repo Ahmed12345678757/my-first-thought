@@ -61,7 +61,16 @@
         <!-- Car Diagram Section -->
         <div class="section-header">مجسم السيارة</div>
         <div class="car-diagram-container">
-            <img src="car-diagram.png" alt="مجسم السيارة" class="car-diagram">
+            <div class="drawing-tools">
+                <button class="tool-btn" data-tool="pen" data-color="#ff0000" style="background: #ff0000;" title="قلم أحمر"></button>
+                <button class="tool-btn" data-tool="pen" data-color="#ff6600" style="background: #ff6600;" title="قلم برتقالي"></button>
+                <button class="tool-btn" data-tool="pen" data-color="#ffcc00" style="background: #ffcc00;" title="قلم أصفر"></button>
+                <button class="tool-btn" data-tool="pen" data-color="#0066ff" style="background: #0066ff;" title="قلم أزرق"></button>
+                <button class="tool-btn" data-tool="pen" data-color="#000000" style="background: #000000;" title="قلم أسود"></button>
+                <button class="tool-btn eraser-btn" data-tool="eraser" title="ممحاة">🧹</button>
+                <button class="clear-drawing-btn" onclick="clearCarDrawing()" title="مسح الكل">🗑️ مسح الرسم</button>
+            </div>
+            <canvas id="car-diagram-canvas" class="car-diagram-canvas"></canvas>
         </div>
 
         <!-- Inspection Table -->
