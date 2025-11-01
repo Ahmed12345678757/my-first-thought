@@ -24,6 +24,14 @@
                 <span>التاريخ:</span>
                 <input type="date" id="inspection-date" value="">
             </div>
+            
+            <button class="search-btn" onclick="openSearchModal()" title="البحث في السجلات">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+                    <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                بحث
+            </button>
         </div>
 
         <!-- Logo Section -->
@@ -162,6 +170,36 @@
                 </svg>
                 <span>حفظ المتغيرات</span>
             </button>
+        </div>
+    </div>
+
+    <!-- Search Modal -->
+    <div id="search-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>🔍 البحث في سجلات الفحص</h3>
+                <button class="close-modal" onclick="closeSearchModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="date-range">
+                    <div class="date-field">
+                        <label>من تاريخ:</label>
+                        <input type="date" id="search-from-date">
+                    </div>
+                    <div class="date-field">
+                        <label>إلى تاريخ:</label>
+                        <input type="date" id="search-to-date">
+                    </div>
+                </div>
+                <button class="modal-search-btn" onclick="searchRecords()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+                        <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    بحث
+                </button>
+            </div>
+            <div class="modal-results" id="search-results"></div>
         </div>
     </div>
 
