@@ -215,8 +215,11 @@ function handleCarTouchStart(e) {
     const touch = e.touches[0];
     const rect = carDiagramCanvas.getBoundingClientRect();
     isDrawingOnCar = true;
-    lastCarX = touch.clientX - rect.left;
-    lastCarY = touch.clientY - rect.top;
+    // Calculate touch position with proper scaling
+    const scaleX = carDiagramCanvas.width / rect.width;
+    const scaleY = carDiagramCanvas.height / rect.height;
+    lastCarX = (touch.clientX - rect.left) * scaleX;
+    lastCarY = (touch.clientY - rect.top) * scaleY;
 }
 
 function handleCarTouchMove(e) {
@@ -225,8 +228,11 @@ function handleCarTouchMove(e) {
     
     const touch = e.touches[0];
     const rect = carDiagramCanvas.getBoundingClientRect();
-    const x = touch.clientX - rect.left;
-    const y = touch.clientY - rect.top;
+    // Calculate touch position with proper scaling
+    const scaleX = carDiagramCanvas.width / rect.width;
+    const scaleY = carDiagramCanvas.height / rect.height;
+    const x = (touch.clientX - rect.left) * scaleX;
+    const y = (touch.clientY - rect.top) * scaleY;
     
     if (currentTool === 'pen') {
         carDiagramCtx.strokeStyle = currentColor;
