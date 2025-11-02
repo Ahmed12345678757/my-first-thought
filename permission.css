@@ -576,7 +576,8 @@ body {
 /* Responsive */
 @media (max-width: 768px) {
     .info-row {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
     }
     
     .permission-row {
