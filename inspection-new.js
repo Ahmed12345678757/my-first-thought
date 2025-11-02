@@ -961,8 +961,8 @@ function displayPhotos() {
         } else {
             return `
                 <div class="photo-item" data-photo-id="${item.id}">
-                    <img src="${item.data}" alt="صورة السيارة">
-                    <button class="photo-delete-btn" onclick="deletePhoto(${item.id})" title="حذف الصورة">
+                    <img src="${item.data}" alt="صورة السيارة" onclick="openImageZoom('${item.data}')">
+                    <button class="photo-delete-btn" onclick="event.stopPropagation(); deletePhoto(${item.id})" title="حذف الصورة">
                         ×
                     </button>
                 </div>
@@ -1160,4 +1160,17 @@ function stopRecordingTimer() {
         recordingTimer = null;
     }
     recordingSeconds = 0;
+}
+
+// Image Zoom Functionality
+function openImageZoom(imageSrc) {
+    const modal = document.getElementById('image-zoom-modal');
+    const zoomedImg = document.getElementById('zoomed-image');
+    modal.style.display = 'flex';
+    zoomedImg.src = imageSrc;
+}
+
+function closeImageZoom() {
+    const modal = document.getElementById('image-zoom-modal');
+    modal.style.display = 'none';
 }

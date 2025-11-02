@@ -781,12 +781,13 @@ body {
     position: absolute;
     top: 10px;
     left: 10px;
+    right: 10px;
     width: auto;
-    max-width: 200px;
     height: auto;
     display: flex;
-    flex-direction: column;
-    gap: 8px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 6px;
     pointer-events: none;
     z-index: 5;
 }
@@ -810,11 +811,14 @@ body {
 
 .photo-item {
     position: relative;
+    width: 70px;
+    height: 70px;
     border-radius: 6px;
     overflow: hidden;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     transition: transform 0.2s ease;
     background: white;
+    cursor: zoom-in;
 }
 
 .photo-item:hover {
@@ -824,7 +828,7 @@ body {
 
 .photo-item img {
     width: 100%;
-    height: 80px;
+    height: 100%;
     object-fit: cover;
     display: block;
 }
@@ -916,6 +920,9 @@ body {
 /* Responsive Camera */
 @media (max-width: 768px) {
     .photo-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
         height: 60px;
     }
     
@@ -1040,4 +1047,45 @@ body {
     color: #9B59B6;
     font-size: 14px;
     margin-left: 2px;
+}
+
+/* Image Zoom Modal */
+#image-zoom-modal {
+    cursor: zoom-out;
+}
+
+#image-zoom-modal .zoom-close {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    color: white;
+    font-size: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1001;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+}
+
+#image-zoom-modal .zoom-close:hover {
+    color: #ccc;
+}
+
+.zoom-content {
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    animation: zoomIn 0.3s;
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
