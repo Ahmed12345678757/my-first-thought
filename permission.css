@@ -246,6 +246,23 @@ body {
     width: 100px;
 }
 
+.compact-line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 0;
+    gap: 8px;
+}
+
+.time-input-inline {
+    padding: 4px 6px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 11px;
+    background: #f5f5f5;
+    width: 80px;
+}
+
 /* Old Permission Type Table - Keep for compatibility */
 .permission-type-table {
     border: 2px solid #333;
