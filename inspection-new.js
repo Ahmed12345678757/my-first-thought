@@ -376,6 +376,7 @@ function saveData() {
         inspectionResults: getInspectionResults(),
         submitterSignature: document.getElementById('submitter-signature').toDataURL(),
         receiverSignature: document.getElementById('receiver-signature').toDataURL(),
+        photos: capturedPhotos,
         savedAt: new Date().toISOString()
     };
     
@@ -426,6 +427,11 @@ function loadSavedData() {
     }
     if (data.receiverSignature) {
         loadSignatureImage('receiver-signature', data.receiverSignature);
+    }
+    
+    // Load photos
+    if (data.photos) {
+        loadPhotos(data.photos);
     }
 }
 
@@ -798,6 +804,13 @@ function viewRecord(key) {
                 });
             }
             
+            // Load photos
+            if (record.photos) {
+                loadPhotos(record.photos);
+            } else {
+                clearPhotos();
+            }
+            
             // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
             
@@ -808,3 +821,174 @@ function viewRecord(key) {
         alert('حدث خطأ أثناء تحميل السجل');
     }
 }
+
+// ==================== Camera Functionality ====================
+
+let cameraStream = null;
+let capturedPhotos = [];
+
+// Open camera modal
+async function openCamera() {
+    const modal = document.getElementById('camera-modal');
+    const video = document.getElementById('camera-video');
+    
+    try {
+        // Request camera access
+        cameraStream = await navigator.mediaDevices.getUserMedia({ 
+            video: { 
+                facingMode: 'environment', // Use back camera on mobile
+                width: { ideal: 1920 },
+                height: { ideal: 1080 }
+            } 
+        });
+        
+        video.srcObject = cameraStream;
+        modal.style.display = 'flex';
+    } catch (error) {
+        console.error('Error accessing camera:', error);
+        alert('لا يمكن الوصول إلى الكاميرا. يرجى التأكد من منح الإذن للكاميرا.');
+    }
+}
+
+// Close camera modal
+function closeCamera() {
+    const modal = document.getElementById('camera-modal');
+    const video = document.getElementById('camera-video');
+    
+    // Stop camera stream
+    if (cameraStream) {
+        cameraStream.getTracks().forEach(track => track.stop());
+        cameraStream = null;
+    }
+    
+    video.srcObject = null;
+    modal.style.display = 'none';
+}
+
+// Capture photo from camera
+function capturePhoto() {
+    const video = document.getElementById('camera-video');
+    const canvas = document.getElementById('camera-canvas');
+    const ctx = canvas.getContext('2d');
+    
+    // Set canvas size to video size
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    
+    // Draw video frame to canvas
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    
+    // Convert canvas to data URL
+    const photoDataURL = canvas.toDataURL('image/jpeg', 0.8);
+    
+    // Add photo to array
+    capturedPhotos.push({
+        id: Date.now(),
+        data: photoDataURL,
+        timestamp: new Date().toISOString()
+    });
+    
+    // Display photo
+    displayPhotos();
+    
+    // Close camera
+    closeCamera();
+    
+    // Show success message
+    showPhotoSuccessMessage();
+}
+
+// Display captured photos
+function displayPhotos() {
+    const container = document.getElementById('photos-container');
+    
+    if (capturedPhotos.length === 0) {
+        container.innerHTML = '';
+        return;
+    }
+    
+    container.innerHTML = capturedPhotos.map(photo => `
+        <div class="photo-item" data-photo-id="${photo.id}">
+            <img src="${photo.data}" alt="صورة السيارة">
+            <button class="photo-delete-btn" onclick="deletePhoto(${photo.id})" title="حذف الصورة">
+                ×
+            </button>
+        </div>
+    `).join('');
+}
+
+// Delete photo
+function deletePhoto(photoId) {
+    if (confirm('هل تريد حذف هذه الصورة؟')) {
+        capturedPhotos = capturedPhotos.filter(photo => photo.id !== photoId);
+        displayPhotos();
+    }
+}
+
+// Show success message
+function showPhotoSuccessMessage() {
+    const message = document.createElement('div');
+    message.style.cssText = `
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 15px 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        z-index: 10000;
+        font-size: 16px;
+        font-weight: 600;
+        animation: slideDown 0.3s ease;
+    `;
+    message.textContent = '✓ تم التقاط الصورة بنجاح';
+    document.body.appendChild(message);
+    
+    setTimeout(() => {
+        message.style.animation = 'slideUp 0.3s ease';
+        setTimeout(() => message.remove(), 300);
+    }, 2000);
+}
+
+// Load photos from saved data
+function loadPhotos(photos) {
+    if (photos && Array.isArray(photos)) {
+        capturedPhotos = photos;
+        displayPhotos();
+    }
+}
+
+// Clear all photos
+function clearPhotos() {
+    capturedPhotos = [];
+    displayPhotos();
+}
+
+// Add CSS animation for success message
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideDown {
+        from {
+            transform: translateX(-50%) translateY(-100px);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+    }
+    
+    @keyframes slideUp {
+        from {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+        to {
+            transform: translateX(-50%) translateY(-100px);
+            opacity: 0;
+        }
+    }
+`;
+document.head.appendChild(style);

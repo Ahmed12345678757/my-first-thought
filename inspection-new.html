@@ -74,6 +74,21 @@
 
         </div>
 
+        <!-- Camera Section -->
+        <div class="section-header">صور السيارة</div>
+        <div class="camera-section">
+            <button class="camera-btn" onclick="openCamera()" title="التقاط صورة">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                    <circle cx="12" cy="13" r="4"></circle>
+                </svg>
+                التقاط صورة
+            </button>
+            <div class="photos-container" id="photos-container">
+                <!-- الصور المُلتقطة ستظهر هنا -->
+            </div>
+        </div>
+
         <!-- Car Diagram Section -->
         <div class="section-header">مجسم السيارة</div>
         <div class="car-diagram-container">
@@ -208,6 +223,29 @@
                 </button>
             </div>
             <div class="modal-results" id="search-results"></div>
+        </div>
+    </div>
+
+    <!-- Camera Modal -->
+    <div id="camera-modal" class="modal" style="display: none;">
+        <div class="modal-content camera-modal-content">
+            <div class="modal-header">
+                <h3>التقاط صورة</h3>
+                <span class="close-modal" onclick="closeCamera()">&times;</span>
+            </div>
+            <div class="camera-container">
+                <video id="camera-video" autoplay playsinline></video>
+                <canvas id="camera-canvas" style="display: none;"></canvas>
+            </div>
+            <div class="camera-controls">
+                <button class="btn btn-primary" onclick="capturePhoto()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                    </svg>
+                    التقاط
+                </button>
+                <button class="btn btn-secondary" onclick="closeCamera()">إغلاق</button>
+            </div>
         </div>
     </div>
 
