@@ -188,7 +188,7 @@ td select option {
 .bottom-buttons {
     display: flex;
     justify-content: center;
-    gap: 15px;
+    gap: 30px;
     margin-top: 20px;
     padding: 0 20px;
 }
