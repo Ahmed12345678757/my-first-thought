@@ -168,11 +168,11 @@ function drawOnCar(e) {
         carDiagramCtx.lineWidth = 4;
         carDiagramCtx.globalCompositeOperation = 'source-over';
     } else if (currentTool === 'eraser') {
-        // For eraser, we need to redraw the car image first, then erase only the drawing
-        // Store current canvas content
-        const imageData = carDiagramCtx.getImageData(0, 0, carDiagramCanvas.width, carDiagramCanvas.height);
+        // Eraser only removes drawings, not the car image
+        // Get current pixel data to check if it's part of the car image
+        const imageData = carDiagramCtx.getImageData(e.offsetX - 10, e.offsetY - 10, 20, 20);
         
-        // Clear the eraser area
+        // Erase only the drawing layer
         carDiagramCtx.save();
         carDiagramCtx.globalCompositeOperation = 'destination-out';
         carDiagramCtx.lineWidth = 20;
@@ -184,9 +184,9 @@ function drawOnCar(e) {
         carDiagramCtx.stroke();
         carDiagramCtx.restore();
         
-        // Redraw the car image underneath
+        // Always redraw the car image to protect it
         carDiagramCtx.globalCompositeOperation = 'destination-over';
-        if (carImage.complete) {
+        if (carImage && carImage.complete) {
             carDiagramCtx.drawImage(carImage, 0, 0, carDiagramCanvas.width, carDiagramCanvas.height);
         }
         carDiagramCtx.globalCompositeOperation = 'source-over';
@@ -240,6 +240,15 @@ function handleCarTouchMove(e) {
     } else if (currentTool === 'eraser') {
         carDiagramCtx.globalCompositeOperation = 'destination-out';
         carDiagramCtx.lineWidth = 20;
+        
+        // After erasing, redraw car image to protect it
+        setTimeout(() => {
+            carDiagramCtx.globalCompositeOperation = 'destination-over';
+            if (carImage && carImage.complete) {
+                carDiagramCtx.drawImage(carImage, 0, 0, carDiagramCanvas.width, carDiagramCanvas.height);
+            }
+            carDiagramCtx.globalCompositeOperation = 'source-over';
+        }, 10);
     }
     
     carDiagramCtx.lineCap = 'round';
