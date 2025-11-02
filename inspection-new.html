@@ -228,7 +228,7 @@
     <div id="camera-modal" class="modal" style="display: none;">
         <div class="modal-content camera-modal-content">
             <div class="modal-header">
-                <h3>التقاط صورة</h3>
+                <h3>الكاميرا</h3>
                 <span class="close-modal" onclick="closeCamera()">&times;</span>
             </div>
             <div class="camera-container">
@@ -240,8 +240,21 @@
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <circle cx="12" cy="12" r="10"></circle>
                     </svg>
-                    التقاط
+                    التقاط صورة
                 </button>
+                <button class="btn btn-danger" id="record-btn" onclick="startRecording()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <circle cx="12" cy="12" r="8"></circle>
+                    </svg>
+                    تسجيل فيديو
+                </button>
+                <button class="btn btn-warning" id="stop-record-btn" onclick="stopRecording()" style="display: none;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <rect x="6" y="6" width="12" height="12"></rect>
+                    </svg>
+                    إيقاف
+                </button>
+                <span id="record-timer" style="display: none; color: #e74c3c; font-weight: bold; margin: 0 10px;">0:00</span>
                 <button class="btn btn-secondary" onclick="closeCamera()">إغلاق</button>
             </div>
         </div>

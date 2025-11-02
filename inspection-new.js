@@ -898,7 +898,7 @@ function capturePhoto() {
     showPhotoSuccessMessage();
 }
 
-// Display captured photos
+// Display captured photos and videos
 function displayPhotos() {
     const container = document.getElementById('photos-container');
     
@@ -907,14 +907,28 @@ function displayPhotos() {
         return;
     }
     
-    container.innerHTML = capturedPhotos.map(photo => `
-        <div class="photo-item" data-photo-id="${photo.id}">
-            <img src="${photo.data}" alt="صورة السيارة">
-            <button class="photo-delete-btn" onclick="deletePhoto(${photo.id})" title="حذف الصورة">
-                ×
-            </button>
-        </div>
-    `).join('');
+    container.innerHTML = capturedPhotos.map(item => {
+        if (item.type === 'video') {
+            return `
+                <div class="photo-item video-item" data-photo-id="${item.id}">
+                    <video src="${item.data}" muted loop onclick="this.paused ? this.play() : this.pause()"></video>
+                    <div class="video-play-icon"></div>
+                    <button class="photo-delete-btn" onclick="deletePhoto(${item.id})" title="حذف الفيديو">
+                        ×
+                    </button>
+                </div>
+            `;
+        } else {
+            return `
+                <div class="photo-item" data-photo-id="${item.id}">
+                    <img src="${item.data}" alt="صورة السيارة">
+                    <button class="photo-delete-btn" onclick="deletePhoto(${item.id})" title="حذف الصورة">
+                        ×
+                    </button>
+                </div>
+            `;
+        }
+    }).join('');
 }
 
 // Delete photo
@@ -992,3 +1006,118 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+
+// ==================== Video Recording ====================
+let mediaRecorder = null;
+let recordedChunks = [];
+let recordingTimer = null;
+let recordingSeconds = 0;
+const MAX_RECORDING_SECONDS = 30;
+
+// Start recording video
+async function startRecording() {
+    try {
+        if (!cameraStream) {
+            alert('الكاميرا غير مفعلة!');
+            return;
+        }
+        
+        // Initialize MediaRecorder
+        mediaRecorder = new MediaRecorder(cameraStream, {
+            mimeType: 'video/webm;codecs=vp8'
+        });
+        
+        recordedChunks = [];
+        recordingSeconds = 0;
+        
+        // Collect data
+        mediaRecorder.ondataavailable = (event) => {
+            if (event.data.size > 0) {
+                recordedChunks.push(event.data);
+            }
+        };
+        
+        // On stop
+        mediaRecorder.onstop = async () => {
+            const blob = new Blob(recordedChunks, { type: 'video/webm' });
+            
+            // Convert to base64 for storage
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                const base64data = reader.result;
+                
+                // Add to photos array
+                capturedPhotos.push({
+                    type: 'video',
+                    data: base64data
+                });
+                
+                // Display video
+                displayPhotos();
+                
+                // Show success message
+                showSuccessMessage('تم تسجيل الفيديو بنجاح! 🎥');
+            };
+            reader.readAsDataURL(blob);
+            
+            // Reset UI
+            stopRecordingTimer();
+        };
+        
+        // Start recording
+        mediaRecorder.start();
+        
+        // Update UI
+        document.getElementById('record-btn').style.display = 'none';
+        document.getElementById('stop-record-btn').style.display = 'inline-flex';
+        document.getElementById('record-timer').style.display = 'inline';
+        
+        // Start timer
+        startRecordingTimer();
+        
+    } catch (error) {
+        console.error('Error starting recording:', error);
+        alert('حدث خطأ أثناء بدء التسجيل!');
+    }
+}
+
+// Stop recording video
+function stopRecording() {
+    if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+        mediaRecorder.stop();
+        
+        // Update UI
+        document.getElementById('record-btn').style.display = 'inline-flex';
+        document.getElementById('stop-record-btn').style.display = 'none';
+        document.getElementById('record-timer').style.display = 'none';
+    }
+}
+
+// Start recording timer
+function startRecordingTimer() {
+    const timerElement = document.getElementById('record-timer');
+    
+    recordingTimer = setInterval(() => {
+        recordingSeconds++;
+        
+        // Format time
+        const minutes = Math.floor(recordingSeconds / 60);
+        const seconds = recordingSeconds % 60;
+        timerElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        
+        // Auto stop at max duration
+        if (recordingSeconds >= MAX_RECORDING_SECONDS) {
+            stopRecording();
+        }
+    }, 1000);
+}
+
+// Stop recording timer
+function stopRecordingTimer() {
+    if (recordingTimer) {
+        clearInterval(recordingTimer);
+        recordingTimer = null;
+    }
+    recordingSeconds = 0;
+}
