@@ -736,84 +736,89 @@ body {
     }
 }
 
-/* Camera Section */
-.camera-section {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.camera-btn {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 24px;
+/* Camera Icon Button in Corner */
+.camera-icon-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
     border: none;
     border-radius: 8px;
-    font-size: 16px;
-    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
+    z-index: 10;
+    box-shadow: 0 4px 8px rgba(102, 126, 234, 0.4);
     transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(102, 126, 234, 0.3);
-    margin-bottom: 15px;
 }
 
-.camera-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(102, 126, 234, 0.4);
+.camera-icon-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px rgba(102, 126, 234, 0.6);
 }
 
-.camera-btn:active {
-    transform: translateY(0);
+.camera-icon-btn:active {
+    transform: scale(0.95);
 }
 
-.camera-btn svg {
-    width: 24px;
-    height: 24px;
+.camera-icon-btn svg {
+    color: white;
 }
 
-/* Photos Container */
-.photos-container {
+/* Photos Overlay Container */
+.photos-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 15px;
-    margin-top: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 8px;
+    padding: 60px 10px 10px 10px;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.photos-overlay > * {
+    pointer-events: auto;
 }
 
 .photo-item {
     position: relative;
-    border-radius: 8px;
+    border-radius: 6px;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     transition: transform 0.2s ease;
+    background: white;
 }
 
 .photo-item:hover {
     transform: scale(1.05);
+    z-index: 20;
 }
 
 .photo-item img {
     width: 100%;
-    height: 150px;
+    height: 80px;
     object-fit: cover;
     display: block;
 }
 
 .photo-delete-btn {
     position: absolute;
-    top: 5px;
-    left: 5px;
-    background: rgba(255, 0, 0, 0.8);
+    top: 2px;
+    right: 2px;
+    background: rgba(255, 0, 0, 0.9);
     color: white;
     border: none;
     border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    font-size: 12px;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -821,6 +826,7 @@ body {
     transition: all 0.2s ease;
     padding: 0;
     line-height: 1;
+    z-index: 15;
 }
 
 .photo-delete-btn:hover {
@@ -888,18 +894,19 @@ body {
 
 /* Responsive Camera */
 @media (max-width: 768px) {
-    .photos-container {
-        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-        gap: 10px;
-    }
-    
     .photo-item img {
-        height: 120px;
+        height: 60px;
     }
     
-    .camera-btn {
-        width: 100%;
-        justify-content: center;
+    .camera-icon-btn {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .photos-overlay {
+        grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+        gap: 6px;
+        padding: 50px 8px 8px 8px;
     }
     
     .camera-modal-content {

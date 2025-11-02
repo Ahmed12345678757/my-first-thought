@@ -74,20 +74,7 @@
 
         </div>
 
-        <!-- Camera Section -->
-        <div class="section-header">صور السيارة</div>
-        <div class="camera-section">
-            <button class="camera-btn" onclick="openCamera()" title="التقاط صورة">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-                    <circle cx="12" cy="13" r="4"></circle>
-                </svg>
-                التقاط صورة
-            </button>
-            <div class="photos-container" id="photos-container">
-                <!-- الصور المُلتقطة ستظهر هنا -->
-            </div>
-        </div>
+
 
         <!-- Car Diagram Section -->
         <div class="section-header">مجسم السيارة</div>
@@ -102,6 +89,17 @@
                 <button class="clear-drawing-btn" onclick="clearCarDrawing()" title="مسح الكل">🗑️ مسح الرسم</button>
             </div>
             <div class="canvas-wrapper">
+                <!-- Camera Icon in Corner -->
+                <button class="camera-icon-btn" onclick="openCamera()" title="التقاط صورة">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                        <circle cx="12" cy="13" r="4"></circle>
+                    </svg>
+                </button>
+                <!-- Photos Container -->
+                <div class="photos-overlay" id="photos-container">
+                    <!-- الصور المُلتقطة ستظهر هنا -->
+                </div>
                 <canvas id="car-diagram-bg-canvas" class="car-diagram-canvas"></canvas>
                 <canvas id="car-diagram-canvas" class="car-diagram-canvas"></canvas>
             </div>
