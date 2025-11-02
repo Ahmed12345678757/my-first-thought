@@ -14,6 +14,7 @@ body {
 /* الرأس */
 .header {
     display: flex;
+    flex-direction: row-reverse;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
@@ -71,6 +72,7 @@ body {
 /* البحث وإضافة سيارة */
 .search-add-container {
     display: flex;
+    flex-direction: row-reverse;
     justify-content: space-between;
     align-items: center;
     gap: 15px;
