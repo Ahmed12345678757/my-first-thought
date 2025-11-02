@@ -8,7 +8,7 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: white;
     min-height: 100vh;
-    padding: 20px;
+    padding: 10px;
     direction: rtl;
 }
 
@@ -16,7 +16,7 @@ body {
     max-width: 100%;
     margin: 0 auto;
     background: white;
-    padding: 30px;
+    padding: 15px;
 }
 
 /* Header */
@@ -120,12 +120,13 @@ body {
 }
 
 .info-field input {
-    padding: 10px;
+    padding: 8px;
     border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 14px;
+    border-radius: 4px;
+    font-size: 13px;
     text-align: right;
     direction: rtl;
+    max-width: 100%;
 }
 
 /* Permission Container - Compact Design */
@@ -143,14 +144,14 @@ body {
 .section-title {
     background: #dc3545;
     color: white;
-    padding: 10px;
+    padding: 8px;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 15px;
     text-align: center;
 }
 
 .section-content {
-    padding: 15px 20px;
+    padding: 10px 15px;
     background: white;
 }
 
@@ -193,12 +194,13 @@ body {
 }
 
 .time-input {
-    padding: 8px 12px;
+    padding: 6px 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    font-size: 13px;
+    font-size: 12px;
     background: #f5f5f5;
-    width: 180px;
+    width: 140px;
+    max-width: 45%;
 }
 
 .input-line-solo {
@@ -207,12 +209,13 @@ body {
 }
 
 .time-input-solo {
-    padding: 8px 12px;
+    padding: 6px 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    font-size: 13px;
+    font-size: 12px;
     background: #f5f5f5;
-    width: 180px;
+    width: 140px;
+    max-width: 45%;
 }
 
 .option-line-with-label {
@@ -228,12 +231,13 @@ body {
 }
 
 .text-input {
-    padding: 8px 12px;
+    padding: 6px 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    font-size: 13px;
+    font-size: 12px;
     background: #f5f5f5;
-    width: 180px;
+    width: 140px;
+    max-width: 45%;
 }
 
 /* Old Permission Type Table - Keep for compatibility */
