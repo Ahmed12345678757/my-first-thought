@@ -9,9 +9,9 @@
 <body>
     <!-- الرأس -->
     <div class="header">
-        <button class="back-btn" onclick="window.location.href='index.html'">←</button>
-        <img src="logo.png" alt="شعار الهلال الأحمر" class="logo">
         <input type="date" id="currentDate" class="date-input">
+        <img src="logo.png" alt="شعار الهلال الأحمر" class="logo">
+        <button class="back-btn" onclick="window.location.href='index.html'">←</button>
     </div>
 
     <!-- العنوان -->
@@ -20,8 +20,8 @@
 
     <!-- البحث وإضافة سيارة -->
     <div class="search-add-container">
-        <input type="text" id="searchInput" placeholder="🔍 البحث برقم اللوحة..." oninput="searchVehicle()">
         <button class="add-vehicle-btn" onclick="openAddModal()">➕ إضافة سيارة</button>
+        <input type="text" id="searchInput" placeholder="🔍 البحث برقم اللوحة..." oninput="searchVehicle()">
     </div>
 
     <!-- الجدول -->
