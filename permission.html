@@ -56,61 +56,65 @@
             </div>
         </div>
 
-        <!-- Permission Type Section - New Design from Image -->
-        <div class="permission-type-section">
+        <!-- Permission Type Section - Exact match to image -->
+        <div class="permission-container">
             <!-- نوع الاستئذان -->
-            <div class="red-header">نوع الاستئذان</div>
-            <div class="permission-box">
-                <div class="checkbox-row">
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="late-arrival">
-                        <span>الحضور متأخر</span>
-                    </label>
-                </div>
-                <div class="checkbox-row">
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="early-departure">
-                        <span>الانصراف مبكر</span>
-                    </label>
-                </div>
-                <div class="checkbox-row">
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="exit-return">
-                        <span>الخروج والعودة</span>
-                    </label>
-                </div>
-                <div class="time-row">
-                    <label>من الساعة</label>
-                    <input type="time" class="time-field">
-                </div>
-                <div class="time-row">
-                    <label>إلى الساعة</label>
-                    <input type="time" class="time-field">
+            <div class="section-box">
+                <div class="section-title">نوع الاستئذان</div>
+                <div class="section-content">
+                    <div class="option-line">
+                        <label class="option-label">
+                            <span>الحضور متأخر</span>
+                            <input type="checkbox" id="late-arrival">
+                        </label>
+                    </div>
+                    <div class="option-line">
+                        <label class="option-label">
+                            <span>الانصراف مبكر</span>
+                            <input type="checkbox" id="early-leave">
+                        </label>
+                    </div>
+                    <div class="option-line">
+                        <label class="option-label">
+                            <span>الخروج والعودة</span>
+                            <input type="checkbox" id="exit-return">
+                        </label>
+                    </div>
+                    <div class="input-line">
+                        <label>من الساعة</label>
+                        <input type="time" class="time-input">
+                    </div>
+                    <div class="input-line">
+                        <label>إلى الساعة</label>
+                        <input type="time" class="time-input">
+                    </div>
                 </div>
             </div>
-            
+
             <!-- مهمة عمل -->
-            <div class="red-header">مهمة عمل</div>
-            <div class="permission-box">
-                <div class="checkbox-row">
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="full-day">
-                        <span>يوم كامل</span>
-                    </label>
-                </div>
-                <div class="time-row">
-                    <input type="time" class="time-field">
-                </div>
-                <div class="checkbox-row">
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="specific-hours-task">
-                        <span>ساعات محددة</span>
-                    </label>
-                    <label class="inline-label">إلى الساعة</label>
-                </div>
-                <div class="task-row">
-                    <label>المهمة</label>
-                    <input type="text" class="task-field">
+            <div class="section-box">
+                <div class="section-title">مهمة عمل</div>
+                <div class="section-content">
+                    <div class="option-line">
+                        <label class="option-label">
+                            <span>يوم كامل</span>
+                            <input type="checkbox" id="full-day">
+                        </label>
+                    </div>
+                    <div class="input-line-solo">
+                        <input type="time" class="time-input-solo">
+                    </div>
+                    <div class="option-line-with-label">
+                        <label class="option-label">
+                            <span>ساعات محددة</span>
+                            <input type="checkbox" id="specific-hours">
+                        </label>
+                        <label class="inline-text">إلى الساعة</label>
+                    </div>
+                    <div class="input-line">
+                        <label>المهمة</label>
+                        <input type="text" class="text-input">
+                    </div>
                 </div>
             </div>
         </div>
