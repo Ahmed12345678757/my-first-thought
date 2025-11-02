@@ -831,6 +831,27 @@ let capturedPhotos = [];
 async function openCamera() {
     const modal = document.getElementById('camera-modal');
     const video = document.getElementById('camera-video');
+    const container = document.querySelector('.camera-container');
+    
+    // Show modal first
+    modal.style.display = 'flex';
+    
+    // Add loading message
+    const loadingMsg = document.createElement('div');
+    loadingMsg.id = 'camera-loading';
+    loadingMsg.style.cssText = `
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 18px;
+        text-align: center;
+        z-index: 10;
+    `;
+    loadingMsg.innerHTML = 'جاري تشغيل الكاميرا...<br>📷';
+    container.style.position = 'relative';
+    container.appendChild(loadingMsg);
     
     try {
         // Request camera access
@@ -843,10 +864,29 @@ async function openCamera() {
         });
         
         video.srcObject = cameraStream;
-        modal.style.display = 'flex';
+        
+        // Wait for video to load
+        video.onloadedmetadata = () => {
+            video.play();
+            // Remove loading message
+            if (loadingMsg && loadingMsg.parentNode) {
+                loadingMsg.remove();
+            }
+        };
+        
     } catch (error) {
         console.error('Error accessing camera:', error);
-        alert('لا يمكن الوصول إلى الكاميرا. يرجى التأكد من منح الإذن للكاميرا.');
+        
+        // Remove loading message
+        if (loadingMsg && loadingMsg.parentNode) {
+            loadingMsg.remove();
+        }
+        
+        // Close modal
+        modal.style.display = 'none';
+        
+        // Show error
+        alert('لا يمكن الوصول إلى الكاميرا!\n\nالرجاء التأكد من:\n1. منح الإذن للكاميرا\n2. عدم استخدام الكاميرا في تطبيق آخر');
     }
 }
 
