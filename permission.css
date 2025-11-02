@@ -55,10 +55,11 @@ body {
 }
 
 .date-section input[type="date"] {
-    padding: 8px;
+    padding: 5px;
     border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 14px;
+    border-radius: 4px;
+    font-size: 11px;
+    width: 110px;
 }
 
 /* Logo Section */
@@ -124,12 +125,13 @@ body {
 }
 
 .info-field input {
-    padding: 8px;
+    padding: 6px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    font-size: 13px;
+    font-size: 12px;
     text-align: right;
     direction: rtl;
+    width: 100px;
     max-width: 100%;
 }
 
@@ -201,13 +203,12 @@ body {
 }
 
 .time-input {
-    padding: 6px 10px;
+    padding: 4px 6px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    font-size: 12px;
+    font-size: 11px;
     background: #f5f5f5;
-    width: auto;
-    max-width: 40%;
+    width: 90px;
 }
 
 .input-line-solo {
@@ -216,13 +217,12 @@ body {
 }
 
 .time-input-solo {
-    padding: 6px 10px;
+    padding: 4px 6px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    font-size: 12px;
+    font-size: 11px;
     background: #f5f5f5;
-    width: auto;
-    max-width: 40%;
+    width: 90px;
 }
 
 .option-line-with-label {
@@ -238,13 +238,12 @@ body {
 }
 
 .text-input {
-    padding: 6px 10px;
+    padding: 4px 6px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    font-size: 12px;
+    font-size: 11px;
     background: #f5f5f5;
-    width: auto;
-    max-width: 40%;
+    width: 100px;
 }
 
 /* Old Permission Type Table - Keep for compatibility */
@@ -361,12 +360,13 @@ body {
 
 .approval-field input {
     width: 100%;
-    padding: 10px;
+    padding: 6px;
     border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 14px;
+    border-radius: 4px;
+    font-size: 12px;
     text-align: right;
     direction: rtl;
+    max-width: 200px;
 }
 
 /* Make date input visible */
