@@ -1,37 +1,22 @@
-// Set default dates
-document.addEventListener('DOMContentLoaded', function() {
-    const today = new Date().toISOString().split('T')[0];
-    const oneMonthAgo = new Date();
-    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
-    const oneMonthAgoStr = oneMonthAgo.toISOString().split('T')[0];
-    
-    document.getElementById('from-date').value = oneMonthAgoStr;
-    document.getElementById('to-date').value = today;
-});
-
 // Search records
 function searchRecords() {
-    const fromDate = document.getElementById('from-date').value;
-    const toDate = document.getElementById('to-date').value;
-    
-    if (!fromDate || !toDate) {
-        alert('الرجاء تحديد الفترة الزمنية');
-        return;
-    }
-    
-    if (new Date(fromDate) > new Date(toDate)) {
-        alert('تاريخ البداية يجب أن يكون قبل تاريخ النهاية');
-        return;
-    }
+    const plateSearch = document.getElementById('plate-search').value.trim();
     
     // Get all inspections from localStorage
     const inspections = JSON.parse(localStorage.getItem('inspections') || '[]');
     
-    // Filter by date range
-    const filtered = inspections.filter(inspection => {
-        const inspectionDate = inspection.date;
-        return inspectionDate >= fromDate && inspectionDate <= toDate;
-    });
+    let filtered;
+    
+    if (plateSearch) {
+        // Search by plate number
+        filtered = inspections.filter(inspection => {
+            const plateNumber = (inspection.plateNumber || '').toLowerCase();
+            return plateNumber.includes(plateSearch.toLowerCase());
+        });
+    } else {
+        // Show all if no search term
+        filtered = inspections;
+    }
     
     displayResults(filtered);
 }

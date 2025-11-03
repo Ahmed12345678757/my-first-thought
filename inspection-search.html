@@ -27,18 +27,11 @@
 
         <!-- Search Section -->
         <div class="search-section">
-            <div class="section-header">🔍 البحث حسب الفترة الزمنية</div>
+            <div class="section-header">🔍 البحث عن سجلات الفحص</div>
             
-            <div class="date-range">
-                <div class="date-field">
-                    <label>من تاريخ:</label>
-                    <input type="date" id="from-date">
-                </div>
-                
-                <div class="date-field">
-                    <label>إلى تاريخ:</label>
-                    <input type="date" id="to-date">
-                </div>
+            <div class="search-input-container">
+                <label>رقم اللوحة:</label>
+                <input type="text" id="plate-search" placeholder="مثال: س ع د 1234">
             </div>
             
             <button class="search-btn" onclick="searchRecords()">
