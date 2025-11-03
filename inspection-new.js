@@ -364,27 +364,36 @@ function clearSignature(type) {
 
 // Save data to localStorage
 function saveData() {
+    // Generate unique ID and receipt number
+    const id = 'INS-' + Date.now();
+    const receiptNumber = Date.now().toString();
+    
     const data = {
+        id: id,
+        receiptNumber: receiptNumber,
         date: document.getElementById('inspection-date').value,
         department: document.getElementById('department').value,
         odometer: document.getElementById('odometer').value,
         vehicleType: document.getElementById('vehicle-type').value,
         plateNumber: document.getElementById('plate-number').value,
         notes: document.getElementById('notes').value,
-        submitterName: document.getElementById('submitter-name').value,
-        receiverName: document.getElementById('receiver-name').value,
+        deliverer: document.getElementById('submitter-name').value,
+        receiver: document.getElementById('receiver-name').value,
         inspectionResults: getInspectionResults(),
-        submitterSignature: document.getElementById('submitter-signature').toDataURL(),
+        delivererSignature: document.getElementById('submitter-signature').toDataURL(),
         receiverSignature: document.getElementById('receiver-signature').toDataURL(),
         photos: capturedPhotos,
         savedAt: new Date().toISOString()
     };
     
-    // Generate unique receipt number (timestamp-based)
-    const receiptNumber = Date.now();
+    // Get existing inspections array
+    let inspections = JSON.parse(localStorage.getItem('inspections') || '[]');
     
-    // Save with unique key for search functionality
-    localStorage.setItem(`inspection_${receiptNumber}`, JSON.stringify(data));
+    // Add new inspection
+    inspections.push(data);
+    
+    // Save back to localStorage
+    localStorage.setItem('inspections', JSON.stringify(inspections));
     
     // Also save as current data for backward compatibility
     localStorage.setItem('vehicleInspectionData', JSON.stringify(data));
