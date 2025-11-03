@@ -178,15 +178,43 @@ function searchVehicle() {
     });
 }
 
-// Open upload modal
+// Open upload action sheet (direct file picker)
 function openUploadModal(index) {
     currentVehicleIndex = index;
     const vehicle = vehicles[index];
     
-    document.getElementById('modal-vehicle-info').textContent = 
-        `${vehicle.type} - ${vehicle.model} - ${vehicle.plate}`;
+    // Show action sheet
+    const actionSheet = document.createElement('div');
+    actionSheet.className = 'action-sheet';
+    actionSheet.innerHTML = `
+        <div class="action-sheet-content">
+            <div class="action-sheet-header">
+                <span>${vehicle.type} - ${vehicle.model} - ${vehicle.plate}</span>
+                <button class="close-sheet" onclick="closeActionSheet()">&times;</button>
+            </div>
+            <button class="action-sheet-option" onclick="selectFromGallery(); closeActionSheet();">
+                📷 اختيار من المكتبة
+            </button>
+            <button class="action-sheet-option" onclick="capturePhoto(); closeActionSheet();">
+                📸 التقاط صورة
+            </button>
+            <button class="action-sheet-option" onclick="selectFile(); closeActionSheet();">
+                📁 رفع ملف
+            </button>
+        </div>
+    `;
     
-    document.getElementById('upload-modal').style.display = 'block';
+    document.body.appendChild(actionSheet);
+    setTimeout(() => actionSheet.classList.add('show'), 10);
+}
+
+// Close action sheet
+function closeActionSheet() {
+    const actionSheet = document.querySelector('.action-sheet');
+    if (actionSheet) {
+        actionSheet.classList.remove('show');
+        setTimeout(() => actionSheet.remove(), 300);
+    }
 }
 
 // Close upload modal
