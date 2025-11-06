@@ -176,9 +176,11 @@ body {
 
 .option-label {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     cursor: pointer;
+    flex-direction: row-reverse;
+    gap: 10px;
 }
 
 .option-label span {
@@ -248,16 +250,19 @@ body {
 }
 
 .compact-line {
-    display: block;
+    display: flex;
+    align-items: center;
     padding: 8px 0;
     border-bottom: 1px solid #f0f0f0;
+    gap: 10px;
 }
 
 .compact-line .option-label {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
-    margin-bottom: 8px;
+    flex-direction: row-reverse;
+    gap: 10px;
 }
 
 .compact-line .option-label span {
