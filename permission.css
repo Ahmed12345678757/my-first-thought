@@ -248,11 +248,28 @@ body {
 }
 
 .compact-line {
+    display: block;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.compact-line .option-label {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    padding: 6px 0;
-    gap: 8px;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.compact-line .option-label span {
+    white-space: nowrap;
+}
+
+.compact-line .time-input-inline {
+    margin-left: 5px;
+}
+
+.compact-line .inline-text {
+    margin: 0 5px;
 }
 
 .time-input-inline {
