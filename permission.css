@@ -176,10 +176,11 @@ body {
 
 .option-label {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     cursor: pointer;
     flex-direction: row-reverse;
+    gap: 10px;
 }
 
 .option-label span {
@@ -258,9 +259,10 @@ body {
 
 .compact-line .option-label {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     flex-direction: row-reverse;
+    gap: 10px;
 }
 
 .compact-line .option-label span {
