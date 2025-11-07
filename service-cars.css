@@ -129,6 +129,26 @@ body {
     margin-bottom: 20px;
 }
 
+/* First row - Name wider than Department */
+.form-row:first-of-type {
+    grid-template-columns: 2fr 1fr;
+}
+
+/* Second row - More gap between time fields */
+.form-row:nth-of-type(2) {
+    gap: 40px;
+}
+
+/* First row - Name and Department */
+.form-row:first-of-type {
+    grid-template-columns: 2fr 1fr;
+}
+
+/* Second row - Time fields with more gap */
+.form-row:nth-of-type(2) {
+    gap: 40px;
+}
+
 /* Form Group */
 .form-group {
     display: flex;
