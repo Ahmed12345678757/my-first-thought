@@ -89,17 +89,15 @@
         <!-- Maintenance Manager Section -->
         <div class="manager-section">
             <h3>توقيع مدير الصيانة</h3>
-            <div class="form-row">
-                <div class="form-group">
-                    <label>الاسم</label>
-                    <input type="text" id="manager-name" placeholder="أدخل اسم مدير الصيانة">
-                </div>
-                <div class="form-group">
-                    <label>التوقيع</label>
-                    <div class="signature-container">
-                        <canvas id="manager-signature" width="300" height="150"></canvas>
-                        <button class="clear-button" onclick="clearSignature('manager-signature')">مسح</button>
-                    </div>
+            <div class="form-group full-width">
+                <label>الاسم</label>
+                <input type="text" id="manager-name" placeholder="أدخل اسم مدير الصيانة">
+            </div>
+            <div class="form-group full-width">
+                <label>التوقيع</label>
+                <div class="signature-container">
+                    <canvas id="manager-signature" width="600" height="150"></canvas>
+                    <button class="clear-button" onclick="clearSignature('manager-signature')">مسح</button>
                 </div>
             </div>
         </div>
