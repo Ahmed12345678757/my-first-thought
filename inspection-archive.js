@@ -74,7 +74,7 @@ function displayRecords(records) {
 function createRecordCard(record) {
     const data = record.data;
     const date = new Date(record.timestamp);
-    const dateStr = date.toLocaleDateString('ar-SA');
+    const dateStr = date.toLocaleDateString('en-GB');
     const timeStr = date.toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' });
     
     return `

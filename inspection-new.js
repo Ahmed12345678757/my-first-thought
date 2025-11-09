@@ -35,6 +35,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Load saved data if exists
     loadSavedData();
+    
+    // Check if viewing from archive
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('view') === 'true') {
+        loadViewRecord();
+    }
 });
 
 // Generate inspection table
@@ -1217,4 +1223,93 @@ function openImageZoom(imageSrc) {
 function closeImageZoom() {
     const modal = document.getElementById('image-zoom-modal');
     modal.style.display = 'none';
+}
+
+// Load record from archive view
+function loadViewRecord() {
+    try {
+        const viewRecord = localStorage.getItem('viewRecord');
+        if (!viewRecord) {
+            return;
+        }
+        
+        const record = JSON.parse(viewRecord);
+        
+        // Load basic data
+        document.getElementById('inspection-date').value = record.date || '';
+        document.getElementById('department').value = record.department || '';
+        document.getElementById('odometer').value = record.odometer || '';
+        document.getElementById('vehicle-type').value = record.vehicleType || '';
+        document.getElementById('plate-number').value = record.plateNumber || '';
+        document.getElementById('notes').value = record.notes || '';
+        document.getElementById('submitter-name').value = record.deliverer || record.submitterName || '';
+        document.getElementById('receiver-name').value = record.receiver || record.receiverName || '';
+        
+        // Load inspection results
+        if (record.inspectionResults) {
+            const rows = document.getElementById('inspection-tbody').children;
+            record.inspectionResults.forEach((result, index) => {
+                if (result && rows[index]) {
+                    const row = rows[index];
+                    const healthyIndicator = row.querySelector('.indicator[data-type="healthy"]');
+                    const unhealthyIndicator = row.querySelector('.indicator[data-type="unhealthy"]');
+                    
+                    // Clear previous state
+                    if (healthyIndicator) healthyIndicator.classList.remove('healthy');
+                    if (unhealthyIndicator) unhealthyIndicator.classList.remove('unhealthy');
+                    
+                    // Set new state
+                    if (result === 'healthy' && healthyIndicator) {
+                        healthyIndicator.classList.add('healthy');
+                    } else if (result === 'unhealthy' && unhealthyIndicator) {
+                        unhealthyIndicator.classList.add('unhealthy');
+                    }
+                }
+            });
+        }
+        
+        // Load signatures
+        setTimeout(() => {
+            if (record.delivererSignature) {
+                const submitterCanvas = document.getElementById('submitter-signature');
+                if (submitterCanvas) {
+                    const submitterCtx = submitterCanvas.getContext('2d');
+                    const submitterImg = new Image();
+                    submitterImg.onload = () => {
+                        submitterCtx.clearRect(0, 0, submitterCanvas.width, submitterCanvas.height);
+                        submitterCtx.drawImage(submitterImg, 0, 0);
+                    };
+                    submitterImg.src = record.delivererSignature;
+                }
+            }
+            
+            if (record.receiverSignature) {
+                const receiverCanvas = document.getElementById('receiver-signature');
+                if (receiverCanvas) {
+                    const receiverCtx = receiverCanvas.getContext('2d');
+                    const receiverImg = new Image();
+                    receiverImg.onload = () => {
+                        receiverCtx.clearRect(0, 0, receiverCanvas.width, receiverCanvas.height);
+                        receiverCtx.drawImage(receiverImg, 0, 0);
+                    };
+                    receiverImg.src = record.receiverSignature;
+                }
+            }
+        }, 500);
+        
+        // Load photos
+        if (record.photos && record.photos.length > 0) {
+            capturedPhotos = record.photos;
+            displayPhotos();
+        }
+        
+        // Clear viewRecord from localStorage
+        localStorage.removeItem('viewRecord');
+        
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+    } catch (e) {
+        console.error('Error loading view record:', e);
+    }
 }
