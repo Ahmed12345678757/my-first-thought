@@ -129,23 +129,14 @@ body {
     margin-bottom: 20px;
 }
 
-/* First row - Equal widths */
+/* All rows - Equal widths for all fields */
 .form-row:first-of-type {
     grid-template-columns: 1fr 1fr;
 }
 
-/* Second row - More gap between time fields */
-.form-row:nth-of-type(2) {
-    gap: 40px;
-}
-
-/* First row - Name and Department */
-.form-row:first-of-type {
-    grid-template-columns: 2fr 1fr;
-}
-
 /* Second row - Time fields with more gap */
 .form-row:nth-of-type(2) {
+    grid-template-columns: 1fr 1fr;
     gap: 40px;
 }
 
