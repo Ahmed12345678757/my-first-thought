@@ -401,6 +401,10 @@ function saveData() {
     // Save back to localStorage
     localStorage.setItem('inspections', JSON.stringify(inspections));
     
+    // Also save as individual record with timestamp key for archive
+    const timestamp = Date.now();
+    localStorage.setItem(`inspection_${timestamp}`, JSON.stringify(data));
+    
     // Also save as current data for backward compatibility
     localStorage.setItem('vehicleInspectionData', JSON.stringify(data));
     
