@@ -1089,3 +1089,47 @@ body {
         opacity: 1;
     }
 }
+
+/* Toggle Signature Button */
+.toggle-signature-btn {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    width: 32px;
+    height: 32px;
+    border: 2px solid;
+    border-radius: 6px;
+    background: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.toggle-signature-btn.active {
+    border-color: #2196F3;
+    background: #E3F2FD;
+}
+
+.toggle-signature-btn.active svg {
+    stroke: #2196F3;
+}
+
+.toggle-signature-btn:not(.active) {
+    border-color: #f44336;
+    background: #FFEBEE;
+}
+
+.toggle-signature-btn:not(.active) svg {
+    stroke: #f44336;
+}
+
+.toggle-signature-btn:hover {
+    transform: scale(1.1);
+}
+
+.signature-canvas-container {
+    position: relative;
+}

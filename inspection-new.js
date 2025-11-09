@@ -304,6 +304,13 @@ function initializeSignature(canvasId) {
     canvas.addEventListener('touchend', stopDrawing);
     
     function startDrawing(e) {
+        // Check if signature is enabled
+        const type = canvasId.replace('-signature', '');
+        const toggleBtn = document.getElementById(`toggle-${type}`);
+        if (!toggleBtn || !toggleBtn.classList.contains('active')) {
+            return;
+        }
+        
         isDrawing = true;
         [lastX, lastY] = [e.offsetX, e.offsetY];
     }
@@ -1315,5 +1322,18 @@ function loadViewRecord() {
         
     } catch (e) {
         console.error('Error loading view record:', e);
+    }
+}
+
+// Toggle signature enable/disable
+function toggleSignature(type) {
+    const toggleBtn = document.getElementById(`toggle-${type}`);
+    
+    if (toggleBtn.classList.contains('active')) {
+        // Disable signature
+        toggleBtn.classList.remove('active');
+    } else {
+        // Enable signature
+        toggleBtn.classList.add('active');
     }
 }
