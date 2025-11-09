@@ -802,15 +802,50 @@ function viewRecord(key) {
             document.getElementById('submitter-name').value = record.submitterName || '';
             document.getElementById('receiver-name').value = record.receiverName || '';
             
-            // Load inspection status
-            if (record.inspectionStatus) {
-                Object.keys(record.inspectionStatus).forEach(item => {
-                    const indicator = document.querySelector(`[data-item="${item}"]`);
-                    if (indicator) {
-                        indicator.classList.remove('healthy', 'unhealthy');
-                        indicator.classList.add(record.inspectionStatus[item]);
+            // Load inspection results
+            if (record.inspectionResults) {
+                const rows = document.getElementById('inspection-tbody').children;
+                record.inspectionResults.forEach((result, index) => {
+                    if (result && rows[index]) {
+                        const row = rows[index];
+                        const healthyIndicator = row.querySelector('.indicator[data-type="healthy"]');
+                        const unhealthyIndicator = row.querySelector('.indicator[data-type="unhealthy"]');
+                        
+                        // Clear previous state
+                        healthyIndicator.classList.remove('healthy');
+                        unhealthyIndicator.classList.remove('unhealthy');
+                        
+                        // Set new state
+                        if (result === 'healthy') {
+                            healthyIndicator.classList.add('healthy');
+                        } else if (result === 'unhealthy') {
+                            unhealthyIndicator.classList.add('unhealthy');
+                        }
                     }
                 });
+            }
+            
+            // Load signatures
+            if (record.delivererSignature) {
+                const submitterCanvas = document.getElementById('submitter-signature');
+                const submitterCtx = submitterCanvas.getContext('2d');
+                const submitterImg = new Image();
+                submitterImg.onload = () => {
+                    submitterCtx.clearRect(0, 0, submitterCanvas.width, submitterCanvas.height);
+                    submitterCtx.drawImage(submitterImg, 0, 0);
+                };
+                submitterImg.src = record.delivererSignature;
+            }
+            
+            if (record.receiverSignature) {
+                const receiverCanvas = document.getElementById('receiver-signature');
+                const receiverCtx = receiverCanvas.getContext('2d');
+                const receiverImg = new Image();
+                receiverImg.onload = () => {
+                    receiverCtx.clearRect(0, 0, receiverCanvas.width, receiverCanvas.height);
+                    receiverCtx.drawImage(receiverImg, 0, 0);
+                };
+                receiverImg.src = record.receiverSignature;
             }
             
             // Load photos
