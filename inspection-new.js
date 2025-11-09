@@ -337,6 +337,14 @@ function initializeSignature(canvasId) {
     
     function handleTouchStart(e) {
         e.preventDefault();
+        
+        // Check if signature is enabled
+        const type = canvasId.replace('-signature', '');
+        const toggleBtn = document.getElementById(`toggle-${type}`);
+        if (!toggleBtn || !toggleBtn.classList.contains('active')) {
+            return;
+        }
+        
         const touch = e.touches[0];
         const rect = canvas.getBoundingClientRect();
         isDrawing = true;
