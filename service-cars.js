@@ -18,6 +18,10 @@ function setTodayDate() {
 // Signature functionality
 let isDrawing = false;
 let signatureData = {};
+let signatureEnabled = {
+    'receiver': true,
+    'manager': true
+};
 
 function initSignature(canvasId) {
     const canvas = document.getElementById(canvasId);
@@ -44,6 +48,12 @@ function initSignature(canvasId) {
     canvas.addEventListener('touchend', stopDrawing);
     
     function startDrawing(e) {
+        // Check if signature is enabled
+        const signatureType = canvasId.replace('-signature', '');
+        if (!signatureEnabled[signatureType]) {
+            return;
+        }
+        
         isDrawing = true;
         const pos = getMousePos(canvas, e);
         ctx.beginPath();
@@ -52,6 +62,14 @@ function initSignature(canvasId) {
     
     function draw(e) {
         if (!isDrawing) return;
+        
+        // Check if signature is enabled
+        const signatureType = canvasId.replace('-signature', '');
+        if (!signatureEnabled[signatureType]) {
+            isDrawing = false;
+            return;
+        }
+        
         const pos = getMousePos(canvas, e);
         ctx.lineTo(pos.x, pos.y);
         ctx.stroke();
@@ -477,3 +495,18 @@ window.onclick = function(event) {
         closeArchive();
     }
 };
+
+// Toggle signature function
+function toggleSignature(type) {
+    const toggleBtn = document.getElementById(`toggle-${type}`);
+    
+    // Toggle state
+    signatureEnabled[type] = !signatureEnabled[type];
+    
+    // Update button class
+    if (signatureEnabled[type]) {
+        toggleBtn.classList.add('active');
+    } else {
+        toggleBtn.classList.remove('active');
+    }
+}

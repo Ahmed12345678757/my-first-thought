@@ -129,9 +129,9 @@ body {
     margin-bottom: 20px;
 }
 
-/* All rows - Equal widths for all fields */
+/* First row - Slightly wider fields */
 .form-row:first-of-type {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1.2fr 1.2fr;
 }
 
 /* Second row - Time fields with more gap */
@@ -397,4 +397,48 @@ body {
     .signature-container canvas {
         height: 120px;
     }
+}
+
+/* Toggle Signature Button */
+.toggle-signature-btn {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    width: 32px;
+    height: 32px;
+    border: 2px solid;
+    border-radius: 6px;
+    background: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.toggle-signature-btn.active {
+    border-color: #2196F3;
+    background: #E3F2FD;
+}
+
+.toggle-signature-btn.active svg {
+    stroke: #2196F3;
+}
+
+.toggle-signature-btn:not(.active) {
+    border-color: #f44336;
+    background: #FFEBEE;
+}
+
+.toggle-signature-btn:not(.active) svg {
+    stroke: #f44336;
+}
+
+.toggle-signature-btn:hover {
+    transform: scale(1.1);
+}
+
+.signature-container {
+    position: relative;
 }
