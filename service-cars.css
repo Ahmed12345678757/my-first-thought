@@ -129,15 +129,16 @@ body {
     margin-bottom: 20px;
 }
 
-/* First row - Slightly wider fields */
+/* First row - Wider name field, normal department field */
 .form-row:first-of-type {
-    grid-template-columns: 1.2fr 1.2fr;
+    grid-template-columns: 1.5fr 1fr;
 }
 
-/* Second row - Time fields with more gap */
+/* Second row - Compact time fields */
 .form-row:nth-of-type(2) {
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
+    grid-template-columns: auto auto;
+    gap: 30px;
+    justify-content: start;
 }
 
 /* Form Group */
@@ -387,9 +388,10 @@ body {
 }
 
 .form-group input[type="time"] {
-    max-width: 150px;
+    width: 140px;
+    max-width: 140px;
     font-size: 14px;
-    padding: 8px 10px;
+    padding: 8px 12px;
 }
 
 /* Responsive */
