@@ -157,3 +157,24 @@ h2 {
         font-size: 14px;
     }
 }
+
+/* Icon Image Styling */
+.icon-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-image img {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+@media (max-width: 600px) {
+    .icon-image img {
+        width: 55px;
+        height: 55px;
+    }
+}
