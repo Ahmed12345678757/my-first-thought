@@ -166,15 +166,15 @@ h2 {
 }
 
 .icon-image img {
-    width: 70px;
-    height: 70px;
+    width: 90px;
+    height: 90px;
     object-fit: contain;
     border-radius: 10px;
 }
 
 @media (max-width: 600px) {
     .icon-image img {
-        width: 55px;
-        height: 55px;
+        width: 70px;
+        height: 70px;
     }
 }
