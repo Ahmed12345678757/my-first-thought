@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeSignature('receiver-signature');
     
     // Load saved data if exists
-    loadSavedData();
+    // loadSavedData(); // Disabled to always start with fresh form
     
     // Check if viewing from archive
     const urlParams = new URLSearchParams(window.location.search);
