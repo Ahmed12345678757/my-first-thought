@@ -19,6 +19,9 @@ const inspectionItems = [
 
 // Initialize the page
 document.addEventListener('DOMContentLoaded', function() {
+    // Clear saved data to always start fresh
+    localStorage.removeItem('vehicleInspectionData');
+    
     // Set today's date
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('inspection-date').value = today;
