@@ -312,3 +312,24 @@ window.addEventListener('load', function() {
         }
     }
 });
+
+// Toggle signature functionality
+let signatureEnabled = true;
+
+function toggleSignature() {
+    signatureEnabled = !signatureEnabled;
+    const canvas = document.getElementById('supervisor-signature');
+    const toggleBtn = document.querySelector('.toggle-signature-btn');
+    
+    if (signatureEnabled) {
+        canvas.style.pointerEvents = 'auto';
+        canvas.style.opacity = '1';
+        toggleBtn.style.background = 'linear-gradient(135deg, #3498db 0%, #2980b9 100%)';
+        toggleBtn.title = 'تعطيل التوقيع';
+    } else {
+        canvas.style.pointerEvents = 'none';
+        canvas.style.opacity = '0.5';
+        toggleBtn.style.background = 'linear-gradient(135deg, #e74c3c 0%, #c0392b 100%)';
+        toggleBtn.title = 'تفعيل التوقيع';
+    }
+}
