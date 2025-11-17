@@ -658,28 +658,28 @@ body {
 .toggle-signature-btn {
     position: absolute;
     top: 10px;
-    left: 10px;
-    width: 40px;
-    height: 40px;
+    right: 10px;
+    width: 45px;
+    height: 45px;
     border: none;
-    border-radius: 50%;
+    border-radius: 8px;
     background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
     color: white;
-    font-size: 20px;
+    font-size: 22px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.25);
     transition: all 0.3s ease;
     z-index: 10;
 }
 
 .toggle-signature-btn:hover {
-    transform: scale(1.1);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(0,0,0,0.35);
 }
 
 .toggle-signature-btn:active {
-    transform: scale(0.95);
+    transform: translateY(0);
 }
