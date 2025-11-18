@@ -324,12 +324,20 @@ function toggleSignature() {
     if (signatureEnabled) {
         canvas.style.pointerEvents = 'auto';
         canvas.style.opacity = '1';
-        toggleBtn.style.background = 'linear-gradient(135deg, #3498db 0%, #2980b9 100%)';
+        toggleBtn.classList.add('active');
         toggleBtn.title = 'تعطيل التوقيع';
     } else {
         canvas.style.pointerEvents = 'none';
         canvas.style.opacity = '0.5';
-        toggleBtn.style.background = 'linear-gradient(135deg, #e74c3c 0%, #c0392b 100%)';
+        toggleBtn.classList.remove('active');
         toggleBtn.title = 'تفعيل التوقيع';
     }
 }
+
+// Initialize toggle button state
+document.addEventListener('DOMContentLoaded', function() {
+    const toggleBtn = document.querySelector('.toggle-signature-btn');
+    if (toggleBtn) {
+        toggleBtn.classList.add('active');
+    }
+});

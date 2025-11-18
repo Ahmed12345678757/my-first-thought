@@ -657,29 +657,36 @@ body {
 /* Toggle signature button */
 .toggle-signature-btn {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 45px;
-    height: 45px;
-    border: none;
-    border-radius: 8px;
-    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
-    color: white;
-    font-size: 22px;
+    bottom: 10px;
+    left: 10px;
+    width: 32px;
+    height: 32px;
+    border: 2px solid;
+    border-radius: 6px;
+    background: white;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.25);
     transition: all 0.3s ease;
     z-index: 10;
+    font-size: 18px;
+}
+
+.toggle-signature-btn.active {
+    border-color: #2196F3;
+    background: #E3F2FD;
+}
+
+.toggle-signature-btn:not(.active) {
+    border-color: #f44336;
+    background: #FFEBEE;
 }
 
 .toggle-signature-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 12px rgba(0,0,0,0.35);
+    transform: scale(1.1);
 }
 
-.toggle-signature-btn:active {
-    transform: translateY(0);
+.signature-canvas-container {
+    position: relative;
 }
