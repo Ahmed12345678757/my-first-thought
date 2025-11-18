@@ -690,3 +690,36 @@ body {
 .signature-canvas-container {
     position: relative;
 }
+
+/* Flash animations */
+@keyframes flash-blue {
+    0%, 100% { 
+        border-color: #2196F3;
+        background: #E3F2FD;
+    }
+    50% { 
+        border-color: #1976D2;
+        background: #2196F3;
+        box-shadow: 0 0 15px rgba(33, 150, 243, 0.6);
+    }
+}
+
+@keyframes flash-red {
+    0%, 100% { 
+        border-color: #f44336;
+        background: #FFEBEE;
+    }
+    50% { 
+        border-color: #c62828;
+        background: #f44336;
+        box-shadow: 0 0 15px rgba(244, 67, 54, 0.6);
+    }
+}
+
+.toggle-signature-btn.flash-blue {
+    animation: flash-blue 0.6s ease-in-out 2;
+}
+
+.toggle-signature-btn.flash-red {
+    animation: flash-red 0.6s ease-in-out 2;
+}

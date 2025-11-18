@@ -321,16 +321,27 @@ function toggleSignature() {
     const canvas = document.getElementById('supervisor-signature');
     const toggleBtn = document.querySelector('.toggle-signature-btn');
     
+    // Remove any existing flash classes
+    toggleBtn.classList.remove('flash-blue', 'flash-red');
+    
     if (signatureEnabled) {
         canvas.style.pointerEvents = 'auto';
         canvas.style.opacity = '1';
         toggleBtn.classList.add('active');
         toggleBtn.title = 'تعطيل التوقيع';
+        
+        // Add blue flash
+        setTimeout(() => toggleBtn.classList.add('flash-blue'), 10);
+        setTimeout(() => toggleBtn.classList.remove('flash-blue'), 1300);
     } else {
         canvas.style.pointerEvents = 'none';
         canvas.style.opacity = '0.5';
         toggleBtn.classList.remove('active');
         toggleBtn.title = 'تفعيل التوقيع';
+        
+        // Add red flash
+        setTimeout(() => toggleBtn.classList.add('flash-red'), 10);
+        setTimeout(() => toggleBtn.classList.remove('flash-red'), 1300);
     }
 }
 
