@@ -1,6 +1,9 @@
 // Set today's date
 document.getElementById('form-date').valueAsDate = new Date();
 
+// Toggle signature functionality variable
+let signatureEnabled = true;
+
 // Signature canvas setup
 const canvas = document.getElementById('supervisor-signature');
 const ctx = canvas.getContext('2d');
@@ -314,8 +317,6 @@ window.addEventListener('load', function() {
 });
 
 // Toggle signature functionality
-let signatureEnabled = true;
-
 function toggleSignature() {
     signatureEnabled = !signatureEnabled;
     const canvas = document.getElementById('supervisor-signature');
