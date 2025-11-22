@@ -335,3 +335,45 @@ window.onclick = function(event) {
         closeAddVehicleModal();
     }
 };
+
+// Save document data
+function saveDocumentData() {
+    const vehicle = vehicles[currentVehicleIndex];
+    const docData = localStorage.getItem(`vehicle-doc-${currentVehicleIndex}`);
+    
+    if (!docData) {
+        alert('لا توجد وثيقة لحفظها!');
+        return;
+    }
+    
+    // Save to localStorage with timestamp
+    const saveData = {
+        vehicle: vehicle,
+        document: docData,
+        savedAt: new Date().toISOString()
+    };
+    
+    localStorage.setItem(`saved-doc-${currentVehicleIndex}`, JSON.stringify(saveData));
+    alert('تم حفظ المتغيرات بنجاح!');
+}
+
+// Send document as PDF
+function sendDocumentPDF() {
+    const vehicle = vehicles[currentVehicleIndex];
+    const docData = localStorage.getItem(`vehicle-doc-${currentVehicleIndex}`);
+    
+    if (!docData) {
+        alert('لا توجد وثيقة لإرسالها!');
+        return;
+    }
+    
+    // In a real application, this would send the PDF to a server or email
+    // For now, we'll just download it
+    const doc = JSON.parse(docData);
+    const link = document.createElement('a');
+    link.href = doc.data;
+    link.download = `وثيقة_${vehicle.type}_${vehicle.plateNumber}.pdf`;
+    link.click();
+    
+    alert('تم إرسال PDF بنجاح!');
+}

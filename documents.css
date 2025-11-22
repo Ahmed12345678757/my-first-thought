@@ -562,3 +562,74 @@ body {
 .action-sheet-option:active {
     transform: scale(0.98);
 }
+
+/* Document Action Buttons */
+.document-action-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 20px;
+    padding: 0 20px;
+}
+
+.doc-action-btn {
+    flex: 1;
+    max-width: 200px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.doc-action-btn svg {
+    flex-shrink: 0;
+}
+
+.save-btn {
+    background: #e0e0e0;
+    color: #333;
+}
+
+.save-btn:hover {
+    background: #d0d0d0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.save-btn:active {
+    transform: translateY(0);
+}
+
+.pdf-btn {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    color: white;
+}
+
+.pdf-btn:hover {
+    background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
+}
+
+.pdf-btn:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+    .document-action-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .doc-action-btn {
+        max-width: 100%;
+    }
+}
