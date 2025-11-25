@@ -301,6 +301,8 @@ body {
 
 .view-modal-content {
     max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
 .close-button {
@@ -388,8 +390,10 @@ body {
 
 .document-viewer img {
     max-width: 100%;
-    max-height: 500px;
+    max-height: 400px;
     object-fit: contain;
+    display: block;
+    margin: 0 auto;
 }
 
 .document-viewer iframe {
